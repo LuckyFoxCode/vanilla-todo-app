@@ -45,7 +45,7 @@
   color: rgba(31, 31, 43, 0.3);
 }
 
-.todo-form__input--error {
+.todo-form__input-error {
   border-color: var(--danger);
 }
 
@@ -72,6 +72,29 @@
   border: 1px solid var(--gray);
   background-color: var(--light);
   padding: 16px;
+}
+
+.todo-list__item-description {
+  flex: 1;
+}
+
+.todo-list__item-remove {
+  font-size: 16px;
+  border-radius: 5px;
+  outline: none;
+  background-color: transparent;
+  border: 2px solid var(--light);
+  cursor: pointer;
+  padding: 5px;
+  transition: var(--all);
+}
+
+.todo-list__item-remove:hover {
+  background-color: var(--danger);
+}
+
+.todo-list__item-remove:focus {
+  border-color: var(--primary);
 }
 
 /* ---- MEDIA ---- */

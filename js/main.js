@@ -34,10 +34,10 @@ const app = {
     input.minLength = 2;
     input.maxLength = 30;
     input.addEventListener("invalid", () => {
-      input.classList.add("todo-form__input--error");
+      input.classList.add("todo-form__input-error");
     });
     input.addEventListener("input", () => {
-      input.classList.remove("todo-form__input--error");
+      input.classList.remove("todo-form__input-error");
     });
 
     const button = document.createElement("button");
@@ -62,7 +62,7 @@ const app = {
     form.insertAdjacentElement("afterend", list);
   },
   createTodoItem(todo) {
-    const { title, completed } = todo;
+    const { id, title, completed } = todo;
 
     const item = document.createElement("li");
     item.classList.add("todo-list__item");
@@ -80,7 +80,17 @@ const app = {
       todo.completed = checkbox.checked;
     });
 
-    item.append(description, checkbox);
+    const deleteBtn = document.createElement("button");
+    deleteBtn.classList.add("todo-list__item-remove");
+    deleteBtn.type = "button";
+    deleteBtn.textContent = "🗑️";
+
+    deleteBtn.addEventListener("click", () => {
+      this.state.tasks = this.state.tasks.filter((task) => task.id !== id);
+      this.render();
+    });
+
+    item.append(description, checkbox, deleteBtn);
     return item;
   },
   handleAddTodoSubmit() {
