@@ -1,12 +1,15 @@
 "use strict";
 
 const app = {
-  state: [],
+  state: {
+    tasks: [],
+  },
   init() {
     this.renderApp();
     this.renderTodoForm();
     this.renderTodoList();
-    this.addTodoTask();
+    this.handleAddTodoSubmit();
+    this.render();
   },
   renderApp() {
     const root = document.createElement("div");
@@ -58,8 +61,7 @@ const app = {
 
     form.insertAdjacentElement("afterend", list);
   },
-  renderTodoItem(todo) {
-    const { list } = this;
+  createTodoItem(todo) {
     const { title, completed } = todo;
 
     const item = document.createElement("li");
@@ -73,14 +75,15 @@ const app = {
     checkbox.classList.add("todo-list__item-checkbox");
     checkbox.type = "checkbox";
     checkbox.checked = completed;
+
     checkbox.addEventListener("change", () => {
       todo.completed = checkbox.checked;
     });
 
     item.append(description, checkbox);
-    list.appendChild(item);
+    return item;
   },
-  addTodoTask() {
+  handleAddTodoSubmit() {
     const { form, input } = this;
 
     form.addEventListener("submit", (event) => {
@@ -93,14 +96,23 @@ const app = {
           completed: false,
         };
 
-        this.state.push(newTodo);
-        this.renderTodoItem(newTodo);
+        this.state.tasks.push(newTodo);
+        this.render();
 
         console.log("---State---", this.state);
 
         input.value = "";
         input.focus();
       }
+    });
+  },
+  render() {
+    const { list, state } = this;
+
+    list.innerHTML = "";
+    state.tasks.forEach((todo) => {
+      const item = this.createTodoItem(todo);
+      list.append(item);
     });
   },
 };
