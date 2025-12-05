@@ -1,21 +1,18 @@
 :root {
   --white: #fff;
+  --light: #f8f9fa;
   --black: #000;
+  --dark: #1f1f2b;
+
   --primary: #007bff;
-  --secondary: #6c757d;
+  --gray: #6c757d;
   --success: #28a745;
   --info: #17a2b8;
   --warning: #ffc107;
   --danger: #dc3545;
-  --light: #f8f9fa;
-  --dark: #343a40;
+  --orange: #ff8c42;
 
-  --accent: #ff8c42;
-  --background: #fdf0e6;
-  --text-muted: #6c7a89;
-  --text-light: rgba(255, 255, 255, 0.7);
-  --bg-dark: #1f1f2b;
-  --card-dark: #2b2b3a;
+  --all: all 0.3s ease-in-out;
 }
 
 * {
@@ -28,8 +25,8 @@ body {
   min-height: 100vh;
   font-size: 16px;
   font-family: "Rubik", sans-serif;
-  color: var(--light);
-  background-color: var(--dark);
+  color: var(--dark);
+  background-color: var(--light);
 }
 
 ul {
