@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background-color: var(--white);
+  background-color: var(--surface);
   margin: 0 auto;
   padding: 1rem;
 }
@@ -23,9 +23,9 @@
 .todo-form__button {
   font-size: 1rem;
   color: var(--dark);
-  background-color: var(--light);
+  background-color: var(--surface);
   border-radius: 5px;
-  border: 2px solid var(--light);
+  border: 2px solid var(--border);
   outline: none;
   padding-block: 10px;
   padding-inline: 15px;
@@ -34,7 +34,7 @@
 
 .todo-form__input:focus,
 .todo-form__button:focus {
-  border-color: var(--primary);
+  border-color: var(--blue);
 }
 
 .todo-form__input {
@@ -42,11 +42,11 @@
 }
 
 .todo-form__input::placeholder {
-  color: rgba(31, 31, 43, 0.3);
+  color: var(--grey-icon);
 }
 
 .todo-form__input-error {
-  border-color: var(--danger);
+  border-color: var(--red);
 }
 
 .todo-form__button {
@@ -54,13 +54,13 @@
 }
 
 .todo-form__button:hover {
-  background-color: var(--gray);
+  background-color: var(--border);
 }
 
 /* ---- LIST ---- */
 .todo-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 16px;
 }
 
@@ -69,8 +69,9 @@
   align-items: center;
   gap: 8px;
   border-radius: 10px;
-  border: 1px solid var(--gray);
-  background-color: var(--light);
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  box-shadow: 1px 1px 3px 1px var(--border);
   padding: 16px;
 }
 
@@ -83,26 +84,38 @@
   text-decoration: line-through;
 }
 
+.todo-list__item-checkbox {
+  width: 16px;
+  height: 16px;
+}
+
 .todo-list__item-remove {
   font-size: 16px;
   border-radius: 5px;
   outline: none;
   background-color: transparent;
-  border: 2px solid var(--light);
+  border: 2px solid transparent;
   cursor: pointer;
   padding: 5px;
   transition: var(--all);
 }
 
 .todo-list__item-remove:hover {
-  background-color: var(--danger);
+  border-color: var(--red);
+  background-color: var(--border);
 }
 
 .todo-list__item-remove:focus {
-  border-color: var(--primary);
+  border-color: var(--blue);
 }
 
 /* ---- MEDIA ---- */
+/* ---- 768px ---- */
+@media (min-width: 768px) {
+  .todo-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
 /* ---- 1440px ---- */
 @media (min-width: 1440px) {
 }
