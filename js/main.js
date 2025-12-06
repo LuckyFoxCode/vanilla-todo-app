@@ -57,8 +57,28 @@ const app = {
     const { form } = this;
     list.classList.add("todo-list");
 
-    this.list = list;
+    list.addEventListener("click", (event) => {
+      if (event.target.classList.contains("todo-list__item-checkbox")) {
+        const item = event.target.closest("li");
+        if (!item) return;
 
+        const id = item.dataset.id;
+        const todo = this.state.tasks.find((task) => task.id === id);
+        todo.completed = !todo.completed;
+        this.render();
+      }
+
+      if (event.target.classList.contains("todo-list__item-remove")) {
+        const item = event.target.closest("li");
+        if (!item) return;
+
+        const id = item.dataset.id;
+        this.state.tasks = this.state.tasks.filter((task) => task.id !== id);
+        this.render();
+      }
+    });
+
+    this.list = list;
     form.insertAdjacentElement("afterend", list);
   },
   createTodoItem(todo) {
@@ -66,6 +86,7 @@ const app = {
 
     const item = document.createElement("li");
     item.classList.add("todo-list__item");
+    item.dataset.id = id;
 
     const description = document.createElement("span");
     description.classList.add("todo-list__item-description");
@@ -78,20 +99,10 @@ const app = {
 
     if (completed) item.classList.add("completed");
 
-    checkbox.addEventListener("change", () => {
-      todo.completed = checkbox.checked;
-      this.render();
-    });
-
     const deleteBtn = document.createElement("button");
     deleteBtn.classList.add("todo-list__item-remove");
     deleteBtn.type = "button";
     deleteBtn.textContent = "🗑️";
-
-    deleteBtn.addEventListener("click", () => {
-      this.state.tasks = this.state.tasks.filter((task) => task.id !== id);
-      this.render();
-    });
 
     item.append(description, checkbox, deleteBtn);
     return item;
