@@ -10,6 +10,7 @@ const app = {
   init() {
     this.renderApp();
     this.renderTodoForm();
+    this.renderStats();
     this.renderTodoList();
     this.handleAddTodoSubmit();
     this.renderInfo();
@@ -94,6 +95,60 @@ const app = {
     this.isOpenFormBtn = isOpenFormBtn;
     root.append(isOpenFormBtn);
   },
+  renderStats() {
+    const { tasks } = this.state;
+
+    const stats = document.createElement("section");
+    stats.classList.add("todo-stats");
+    stats.textContent = "My Tasks";
+
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("todo-stats__wrapper");
+
+    this.statsCounters = [];
+
+    const all = tasks.length;
+    const active = tasks.filter((t) => !t.completed).length;
+    const completed = tasks.filter((t) => t.completed).length;
+
+    const statsData = [
+      { label: "All", count: all },
+      { label: "Active", count: active },
+      { label: "Completed", count: completed },
+    ];
+
+    statsData.forEach((item) => {
+      const card = document.createElement("div");
+      card.classList.add("todo-stats__card");
+
+      const title = document.createElement("span");
+      title.textContent = item.label;
+
+      const count = document.createElement("span");
+      count.textContent = item.count;
+
+      this.statsCounters.push(count);
+
+      card.append(title, count);
+      wrapper.append(card);
+    });
+
+    this.stats = stats;
+    stats.append(wrapper);
+    this.root.prepend(stats);
+  },
+  updateStats() {
+    const { tasks } = this.state;
+    if (!this.statsCounters) return;
+
+    const all = tasks.length;
+    const active = tasks.filter((t) => !t.completed).length;
+    const completed = tasks.filter((t) => t.completed).length;
+
+    const values = [all, active, completed];
+
+    this.statsCounters.forEach((el, idx) => (el.textContent = values[idx]));
+  },
   renderTodoList() {
     const list = document.createElement("ul");
     const { root } = this;
@@ -165,8 +220,6 @@ const app = {
         this.state.tasks.push(newTodo);
         this.render();
 
-        console.log("---State---", this.state);
-
         input.value = "";
         this.ui.isFormOpen = false;
         this.updateFormVisibility();
@@ -176,6 +229,8 @@ const app = {
   },
   renderInfo() {
     const { list } = this;
+    const { tasks } = this.state;
+
     if (!this.info) {
       const info = document.createElement("div");
       info.classList.add("todo-info");
@@ -189,14 +244,15 @@ const app = {
       list.insertAdjacentElement("afterend", info);
     }
 
-    const activeCount = this.state.tasks.filter(
-      (task) => !task.completed
-    ).length;
+    const activeCount = tasks.filter((t) => !t.completed).length;
+    const totalCount = tasks.length;
 
-    if (!activeCount) {
-      this.counterText.textContent = "Nothing to do — enjoy your day 😎";
+    if (totalCount === 0) {
+      this.counterText.textContent = "Zero tasks — take a deep breath 🚀";
+    } else if (activeCount === 0) {
+      this.counterText.textContent = "Perfect! You're unstoppable ✨";
     } else {
-      this.counterText.textContent = `${activeCount} left tasks.`;
+      this.counterText.textContent = "You still have things to conquer 💪";
     }
   },
   render() {
@@ -209,6 +265,7 @@ const app = {
     });
 
     this.renderInfo();
+    this.updateStats();
   },
 };
 

@@ -40,6 +40,31 @@
   box-shadow: 0 0 10px var(--blue), 0 0 20px var(--blue);
 }
 
+/* ---- STATISTICS ---- */
+.todo-stats {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.todo-stats__wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.todo-stats__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 10px;
+  border-radius: 10px;
+  border: 2px solid var(--border);
+  box-shadow: 0 10px 20px var(--border);
+  padding: 15px;
+}
+
 /* ---- FORM ---- */
 .todo-form-overlay {
   position: absolute;
@@ -140,6 +165,7 @@
 .todo-list__item-checkbox {
   width: 16px;
   height: 16px;
+  cursor: pointer;
 }
 
 .todo-list__item-remove {
@@ -162,6 +188,12 @@
   border-color: var(--blue);
 }
 
+/* ---- INFO ---- */
+.todo-info {
+  font-size: 20px;
+  text-align: center;
+}
+
 /* ---- MEDIA ---- */
 /* ---- 768px ---- */
 @media (min-width: 768px) {
@@ -169,10 +201,12 @@
     width: 90%;
     padding: 20px;
   }
+
   .todo-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-}
-/* ---- 1440px ---- */
-@media (min-width: 1440px) {
+
+  .todo-info {
+    font-size: 24px;
+  }
 }
