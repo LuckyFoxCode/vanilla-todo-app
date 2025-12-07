@@ -4,6 +4,9 @@ const app = {
   state: {
     tasks: [],
   },
+  ui: {
+    isFormOpen: false,
+  },
   init() {
     this.renderApp();
     this.renderTodoForm();
@@ -11,6 +14,16 @@ const app = {
     this.handleAddTodoSubmit();
     this.renderInfo();
     this.render();
+    this.renderAddButton();
+    this.updateFormVisibility();
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && this.ui.isFormOpen) {
+        this.ui.isFormOpen = false;
+        this.updateFormVisibility();
+        this.isOpenFormBtn.focus();
+      }
+    });
   },
   renderApp() {
     const root = document.createElement("div");
@@ -21,6 +34,10 @@ const app = {
   },
   renderTodoForm() {
     const { root } = this;
+
+    const overlay = document.createElement("div");
+    overlay.classList.add("todo-form-overlay");
+    overlay.classList.add("todo-form-overlay--hidden");
 
     const form = document.createElement("form");
     form.classList.add("todo-form");
@@ -46,16 +63,40 @@ const app = {
     button.classList.add("todo-form__button");
     button.textContent = "Add";
 
+    this.formOverlay = overlay;
     this.form = form;
     this.input = input;
     this.button = button;
 
+    overlay.append(form);
     form.append(input, button);
-    root.appendChild(form);
+    root.appendChild(overlay);
+  },
+  updateFormVisibility() {
+    const { isFormOpen } = this.ui;
+    const { formOverlay } = this;
+
+    if (!formOverlay) return;
+    formOverlay.classList.toggle("todo-form-overlay--hidden", !isFormOpen);
+  },
+  renderAddButton() {
+    const { root } = this;
+    const isOpenFormBtn = document.createElement("button");
+    isOpenFormBtn.classList.add("todo-add-btn");
+    isOpenFormBtn.textContent = "+";
+
+    isOpenFormBtn.addEventListener("click", () => {
+      this.ui.isFormOpen = true;
+      this.updateFormVisibility();
+      this.input.focus();
+    });
+
+    this.isOpenFormBtn = isOpenFormBtn;
+    root.append(isOpenFormBtn);
   },
   renderTodoList() {
     const list = document.createElement("ul");
-    const { form } = this;
+    const { root } = this;
     list.classList.add("todo-list");
 
     list.addEventListener("click", (event) => {
@@ -80,7 +121,7 @@ const app = {
     });
 
     this.list = list;
-    form.insertAdjacentElement("afterend", list);
+    root.append(list);
   },
   createTodoItem(todo) {
     const { id, title, completed } = todo;
@@ -127,7 +168,9 @@ const app = {
         console.log("---State---", this.state);
 
         input.value = "";
-        input.focus();
+        this.ui.isFormOpen = false;
+        this.updateFormVisibility();
+        this.isOpenFormBtn.focus();
       }
     });
   },
