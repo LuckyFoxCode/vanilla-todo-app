@@ -20,8 +20,8 @@ Each phase represents a new level of frontend skills: DOM → State → UX → S
 
 ## Phase C — UX & DOM Optimizations
 
-- [ ] Step 8 — Event delegation
-- [ ] Step 9 — Active counter + "Clear completed"
+- [x] Step 8 — Event delegation
+- [x] Step 9 — Active counter + "Clear completed"
 
 ## Phase D — Persistence & Filters
 
