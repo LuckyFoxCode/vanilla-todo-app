@@ -48,6 +48,38 @@
   row-gap: 20px;
 }
 
+.todo-stats__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todo-stats__header-title {
+  font-size: 28px;
+  text-transform: capitalize;
+}
+
+.todo-stats__header-clear {
+  font-size: 16px;
+  text-transform: capitalize;
+  background-color: transparent;
+  border: 2px solid var(--border);
+  box-shadow: 0 10px 20px var(--border);
+  border-radius: 10px;
+  outline: none;
+  padding: 10px 10px;
+  transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.todo-stats__header-clear:hover {
+  background-color: var(--border);
+}
+
+.todo-stats__header-clear:focus {
+  border-color: var(--blue);
+}
+
 .todo-stats__wrapper {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -197,6 +229,10 @@
 /* ---- MEDIA ---- */
 /* ---- 768px ---- */
 @media (min-width: 768px) {
+  .todo-stats__header-title {
+    font-size: 36px;
+  }
+
   .todo-form {
     width: 90%;
     padding: 20px;

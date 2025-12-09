@@ -100,7 +100,20 @@ const app = {
 
     const stats = document.createElement("section");
     stats.classList.add("todo-stats");
-    stats.textContent = "My Tasks";
+
+    const statsHeader = document.createElement("div");
+    statsHeader.classList.add("todo-stats__header");
+
+    const title = document.createElement("h1");
+    title.classList.add("todo-stats__header-title");
+    title.textContent = "my tasks";
+
+    const removeCompletedTasks = document.createElement("button");
+    removeCompletedTasks.classList.add("todo-stats__header-clear");
+    removeCompletedTasks.type = "button";
+    removeCompletedTasks.textContent = "clear ✔️";
+
+    removeCompletedTasks.addEventListener("click", () => this.clearCompleted());
 
     const wrapper = document.createElement("div");
     wrapper.classList.add("todo-stats__wrapper");
@@ -134,7 +147,10 @@ const app = {
     });
 
     this.stats = stats;
-    stats.append(wrapper);
+    this.removeCompletedTasks = removeCompletedTasks;
+
+    statsHeader.append(title, removeCompletedTasks);
+    stats.append(statsHeader, wrapper);
     this.root.prepend(stats);
   },
   updateStats() {
@@ -148,6 +164,10 @@ const app = {
     const values = [all, active, completed];
 
     this.statsCounters.forEach((el, idx) => (el.textContent = values[idx]));
+  },
+  clearCompleted() {
+    this.state.tasks = this.state.tasks.filter((t) => !t.completed);
+    this.render();
   },
   renderTodoList() {
     const list = document.createElement("ul");
