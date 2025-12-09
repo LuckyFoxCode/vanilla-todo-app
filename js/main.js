@@ -8,6 +8,7 @@ const app = {
     isFormOpen: false,
   },
   init() {
+    this.load();
     this.renderApp();
     this.renderTodoForm();
     this.renderStats();
@@ -168,6 +169,7 @@ const app = {
   clearCompleted() {
     this.state.tasks = this.state.tasks.filter((t) => !t.completed);
     this.render();
+    this.save();
   },
   renderTodoList() {
     const list = document.createElement("ul");
@@ -183,6 +185,7 @@ const app = {
         const todo = this.state.tasks.find((task) => task.id === id);
         todo.completed = !todo.completed;
         this.render();
+        this.save();
       }
 
       if (event.target.classList.contains("todo-list__item-remove")) {
@@ -192,6 +195,7 @@ const app = {
         const id = item.dataset.id;
         this.state.tasks = this.state.tasks.filter((task) => task.id !== id);
         this.render();
+        this.save();
       }
     });
 
@@ -239,6 +243,7 @@ const app = {
 
         this.state.tasks.push(newTodo);
         this.render();
+        this.save();
 
         input.value = "";
         this.ui.isFormOpen = false;
@@ -286,6 +291,24 @@ const app = {
 
     this.renderInfo();
     this.updateStats();
+  },
+  save() {
+    try {
+      const serialized = JSON.stringify(this.state.tasks);
+      localStorage.setItem("vanila-todo-tasks", serialized);
+    } catch (error) {
+      console.error("Error to save tasks", error);
+    }
+  },
+  load() {
+    try {
+      const data = localStorage.getItem("vanila-todo-tasks");
+      if (!data) return;
+
+      this.state.tasks = JSON.parse(data);
+    } catch (error) {
+      console.error("Error to load tasks", error);
+    }
   },
 };
 
