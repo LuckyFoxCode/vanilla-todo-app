@@ -97,6 +97,23 @@
   padding: 15px;
 }
 
+/* ---- FILTER ---- */
+.todo-filter {
+  display: flex;
+  column-gap: 10px;
+}
+
+.todo-filter__btn {
+  background-color: transparent;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.todo-filter__btn.active-filter {
+  border-color: var(--blue);
+}
+
 /* ---- FORM ---- */
 .todo-form-overlay {
   position: absolute;

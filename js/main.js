@@ -6,12 +6,14 @@ const app = {
   },
   ui: {
     isFormOpen: false,
+    filtered: "all",
   },
   init() {
     this.load();
     this.renderApp();
     this.renderTodoForm();
     this.renderStats();
+    this.renderFilterTasks();
     this.renderTodoList();
     this.handleAddTodoSubmit();
     this.renderInfo();
@@ -171,6 +173,37 @@ const app = {
     this.render();
     this.save();
   },
+  renderFilterTasks() {
+    const filterStatus = ["all", "active", "completed"];
+
+    const filterTask = document.createElement("section");
+    filterTask.classList.add("todo-filter");
+
+    filterStatus.forEach((element) => {
+      const filterButton = document.createElement("button");
+      filterButton.classList.add("todo-filter__btn");
+      filterButton.textContent = element;
+      filterButton.dataset.filter = element;
+
+      if (this.ui.filtered === element) {
+        filterButton.classList.add("active-filter");
+      }
+
+      filterButton.addEventListener("click", () => {
+        const buttons = document.querySelectorAll(".todo-filter__btn");
+        buttons.forEach((el) => el.classList.remove("active-filter"));
+        filterButton.classList.add("active-filter");
+
+        this.ui.filtered = element;
+        this.render();
+        this.save();
+      });
+
+      filterTask.append(filterButton);
+    });
+
+    this.root.append(filterTask);
+  },
   renderTodoList() {
     const list = document.createElement("ul");
     const { root } = this;
@@ -282,19 +315,30 @@ const app = {
   },
   render() {
     const { list, state } = this;
+    let activeTasks = this.state.tasks;
 
     list.innerHTML = "";
-    state.tasks.forEach((todo) => {
+
+    if (this.ui.filtered === "active") {
+      activeTasks = activeTasks.filter((t) => !t.completed);
+    } else if (this.ui.filtered === "completed") {
+      activeTasks = activeTasks.filter((t) => t.completed);
+    }
+    activeTasks.forEach((todo) => {
       const item = this.createTodoItem(todo);
       list.append(item);
     });
 
     this.renderInfo();
     this.updateStats();
+    console.log(this.ui.filtered);
   },
   save() {
     try {
-      const serialized = JSON.stringify(this.state.tasks);
+      const serialized = JSON.stringify({
+        tasks: [...this.state.tasks],
+        filtered: this.ui.filtered,
+      });
       localStorage.setItem("vanila-todo-tasks", serialized);
     } catch (error) {
       console.error("Error to save tasks", error);
@@ -305,7 +349,11 @@ const app = {
       const data = localStorage.getItem("vanila-todo-tasks");
       if (!data) return;
 
-      this.state.tasks = JSON.parse(data);
+      const obj = JSON.parse(data);
+      console.log(obj);
+
+      this.state.tasks = obj.tasks;
+      this.ui.filtered = obj.filtered;
     } catch (error) {
       console.error("Error to load tasks", error);
     }
