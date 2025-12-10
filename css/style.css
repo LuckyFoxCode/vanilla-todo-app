@@ -101,16 +101,35 @@
 .todo-filter {
   display: flex;
   column-gap: 10px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 10px 20px var(--border);
+  padding: 15px;
 }
 
 .todo-filter__btn {
+  font-size: 16px;
+  text-transform: capitalize;
   background-color: transparent;
   border: 2px solid var(--border);
   border-radius: 10px;
-  padding: 10px;
+  padding: 10px 15px;
+  transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out,
+    background-color 0.3s ease-in-out;
+  outline: none;
+  cursor: pointer;
+}
+
+.todo-filter__btn:hover {
+  background-color: var(--border);
 }
 
 .todo-filter__btn.active-filter {
+  border-color: var(--blue);
+  box-shadow: 3px 3px 8px var(--blue);
+}
+
+.todo-filter__btn:focus {
   border-color: var(--blue);
 }
 
