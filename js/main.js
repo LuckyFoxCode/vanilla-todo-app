@@ -247,40 +247,39 @@ const app = {
         task.editing = true;
         this.render();
 
-        const li = document.querySelector(`[data-id="${id}"]`);
+        const li = this.list.querySelector(`[data-id="${id}"]`);
         const span = li.querySelector(".todo-list__item-description");
         span.focus();
       }
     });
 
     list.addEventListener("keydown", (event) => {
-      if (event.key === "Enter") {
-        event.preventDefault();
+      const isEnter = event.key === "Enter";
+      const isDescription = event.target.classList.contains(
+        "todo-list__item-description"
+      );
 
-        if (event.target.classList.contains("todo-list__item-description")) {
-          const item = event.target.closest("li");
+      if (!isEnter || !isDescription) return;
 
-          if (!item) return;
+      const item = event.target.closest("li");
+      if (!item) return;
 
-          const id = item.dataset.id;
-          const task = this.state.tasks.find((t) => t.id === id);
+      const id = item.dataset.id;
+      const task = this.state.tasks.find((t) => t.id === id);
 
-          if (task.editing) {
-            const newValue = event.target.textContent.trim();
+      if (!task.editing) return;
+      event.preventDefault();
 
-            if (newValue.length === 0) {
-              task.editing = false;
+      const newValue = event.target.textContent.trim();
 
-              this.render();
-            } else {
-              task.title = newValue;
-              this.editing = false;
-
-              this.render();
-              this.save();
-            }
-          }
-        }
+      if (newValue.length === 0) {
+        task.editing = false;
+        this.render();
+      } else {
+        task.title = newValue;
+        task.editing = false;
+        this.render();
+        this.save();
       }
     });
 
@@ -298,10 +297,7 @@ const app = {
     description.classList.add("todo-list__item-description");
     description.textContent = title;
 
-    if (editing) {
-      description.contentEditable = true;
-      // description.focus();
-    }
+    if (editing) description.contentEditable = true;
 
     const checkbox = document.createElement("input");
     checkbox.classList.add("todo-list__item-checkbox");
