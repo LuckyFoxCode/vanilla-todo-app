@@ -85,6 +85,7 @@ const app = {
   },
   renderAddButton() {
     const { root } = this;
+
     const isOpenFormBtn = document.createElement("button");
     isOpenFormBtn.classList.add("todo-add-btn");
     isOpenFormBtn.textContent = "+";
@@ -158,6 +159,7 @@ const app = {
   },
   updateStats() {
     const { tasks } = this.state;
+
     if (!this.statsCounters) return;
 
     const all = tasks.length;
@@ -170,6 +172,7 @@ const app = {
   },
   clearCompleted() {
     this.state.tasks = this.state.tasks.filter((t) => !t.completed);
+
     this.render();
     this.save();
   },
@@ -205,8 +208,9 @@ const app = {
     this.root.append(filterTask);
   },
   renderTodoList() {
-    const list = document.createElement("ul");
     const { root } = this;
+
+    const list = document.createElement("ul");
     list.classList.add("todo-list");
 
     list.addEventListener("click", (event) => {
@@ -232,11 +236,59 @@ const app = {
       }
     });
 
+    list.addEventListener("dblclick", (event) => {
+      if (event.target.classList.contains("todo-list__item-description")) {
+        const item = event.target.closest("li");
+
+        if (!item) return;
+
+        const id = item.dataset.id;
+        const task = this.state.tasks.find((t) => t.id === id);
+        task.editing = true;
+        this.render();
+
+        const li = document.querySelector(`[data-id="${id}"]`);
+        const span = li.querySelector(".todo-list__item-description");
+        span.focus();
+      }
+    });
+
+    list.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+
+        if (event.target.classList.contains("todo-list__item-description")) {
+          const item = event.target.closest("li");
+
+          if (!item) return;
+
+          const id = item.dataset.id;
+          const task = this.state.tasks.find((t) => t.id === id);
+
+          if (task.editing) {
+            const newValue = event.target.textContent.trim();
+
+            if (newValue.length === 0) {
+              task.editing = false;
+
+              this.render();
+            } else {
+              task.title = newValue;
+              this.editing = false;
+
+              this.render();
+              this.save();
+            }
+          }
+        }
+      }
+    });
+
     this.list = list;
     root.append(list);
   },
   createTodoItem(todo) {
-    const { id, title, completed } = todo;
+    const { id, title, completed, editing } = todo;
 
     const item = document.createElement("li");
     item.classList.add("todo-list__item");
@@ -245,6 +297,11 @@ const app = {
     const description = document.createElement("span");
     description.classList.add("todo-list__item-description");
     description.textContent = title;
+
+    if (editing) {
+      description.contentEditable = true;
+      // description.focus();
+    }
 
     const checkbox = document.createElement("input");
     checkbox.classList.add("todo-list__item-checkbox");
@@ -272,6 +329,7 @@ const app = {
           id: crypto.randomUUID(),
           title: input.value,
           completed: false,
+          editing: false,
         };
 
         this.state.tasks.push(newTodo);
@@ -314,7 +372,7 @@ const app = {
     }
   },
   render() {
-    const { list, state } = this;
+    const { list } = this;
     let activeTasks = this.state.tasks;
 
     list.innerHTML = "";
@@ -331,7 +389,6 @@ const app = {
 
     this.renderInfo();
     this.updateStats();
-    console.log(this.ui.filtered);
   },
   save() {
     try {
@@ -350,7 +407,6 @@ const app = {
       if (!data) return;
 
       const obj = JSON.parse(data);
-      console.log(obj);
 
       this.state.tasks = obj.tasks;
       this.ui.filtered = obj.filtered;

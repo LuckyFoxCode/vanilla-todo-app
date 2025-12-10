@@ -223,6 +223,15 @@
 
 .todo-list__item-description {
   flex: 1;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 10px;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.todo-list__item-description:focus {
+  outline: none;
+  border-color: var(--blue);
 }
 
 .todo-list__item.completed .todo-list__item-description {
