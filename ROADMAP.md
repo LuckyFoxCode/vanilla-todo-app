@@ -25,8 +25,8 @@ Each phase represents a new level of frontend skills: DOM → State → UX → S
 
 ## Phase D — Persistence & Filters
 
-- [ ] Step 10 — Save to localStorage
-- [ ] Step 11 — Filters (All / Active / Completed)
+- [x] Step 10 — Save to localStorage
+- [x] Step 11 — Filters (All / Active / Completed)
 
 ## Phase E — Advanced Features
 
