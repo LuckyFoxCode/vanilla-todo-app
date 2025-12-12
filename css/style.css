@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap");
 
 @import "./base.css";
 
@@ -55,12 +56,14 @@
 }
 
 .todo-stats__header-title {
+  font-family: var(--base-font);
   font-size: 28px;
   text-transform: capitalize;
 }
 
 .todo-stats__header-clear {
-  font-size: 16px;
+  font-family: var(--second-font);
+  font-size: 18px;
   text-transform: capitalize;
   background-color: transparent;
   border: 2px solid var(--border);
@@ -91,6 +94,7 @@
   flex-direction: column;
   align-items: center;
   row-gap: 10px;
+  font-size: 16px;
   border-radius: 10px;
   border: 2px solid var(--border);
   box-shadow: 0 10px 20px var(--border);
@@ -114,6 +118,7 @@
   border: 2px solid var(--border);
   border-radius: 10px;
   padding: 10px 15px;
+  font-family: var(--second-font);
   transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out,
     background-color 0.3s ease-in-out;
   outline: none;
@@ -167,6 +172,7 @@
 
 .todo-form__input,
 .todo-form__button {
+  font-family: var(--second-font);
   font-size: 1rem;
   color: var(--dark);
   background-color: var(--surface);
@@ -276,6 +282,10 @@
 @media (min-width: 768px) {
   .todo-stats__header-title {
     font-size: 36px;
+  }
+
+  .todo-stats__card {
+    font-size: 20px;
   }
 
   .todo-form {

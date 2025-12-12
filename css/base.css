@@ -18,6 +18,8 @@
   --red: #e8687f;
   --yellow: #f3c04d;
 
+  --base-font: "Rubik", sans-serif;
+  --second-font: "Pixelify Sans", sans-serif;
   --all: all 0.3s ease-in-out;
 }
 
@@ -38,7 +40,7 @@
 body {
   min-height: 100vh;
   font-size: 16px;
-  font-family: "Rubik", sans-serif;
+  font-family: var(--second-font);
   color: var(--text-primary);
   background-color: var(--bg);
 }
