@@ -230,9 +230,15 @@ const app = {
         if (!item) return;
 
         const id = item.dataset.id;
-        this.state.tasks = this.state.tasks.filter((task) => task.id !== id);
-        this.render();
-        this.save();
+        item.classList.add("todo-list__item-removing");
+
+        item.addEventListener("transitionend", (event) => {
+          if (event.propertyName !== "opacity") return;
+
+          this.state.tasks = this.state.tasks.filter((task) => task.id !== id);
+          this.render();
+          this.save();
+        });
       }
     });
 
