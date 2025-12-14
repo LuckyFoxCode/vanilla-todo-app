@@ -30,15 +30,14 @@ Each phase represents a new level of frontend skills: DOM → State → UX → S
 
 ## Phase E — Advanced Features
 
-- [ ] Step 12 — Inline task editing
-- [ ] Step 13 — Animations (add/remove)
-- [ ] Step 14 — Drag & drop sorting
-- [ ] Step 15 — Mock API sync (optional)
+- [x] Step 12 — Inline task editing
+- [x] Step 13 — Animations (add/remove)
+- [ ] Step 14 — Mock API sync (optional)
 
 ## Phase F — Moving Toward Vue
 
-- [ ] Step 16 — Split project into modules (ESM)
-- [ ] Step 17 — README + GitHub Pages deployment
+- [ ] Step 15 — Split project into modules (ESM)
+- [ ] Step 16 — README + GitHub Pages deployment
 
 ---
 
