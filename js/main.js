@@ -9,10 +9,14 @@ const app = {
     filtered: "all",
   },
   async init() {
-    const data = await getTasks();
+    try {
+      const data = await getTasks();
 
-    this.state.tasks = [...data.tasks];
-    this.ui.filtered = data.filtered;
+      this.state.tasks = [...data.tasks];
+      this.ui.filtered = data.filtered;
+    } catch (error) {
+      console.error(error);
+    }
 
     this.renderApp();
     this.renderTodoForm();
@@ -174,11 +178,11 @@ const app = {
 
     this.statsCounters.forEach((el, idx) => (el.textContent = values[idx]));
   },
-  async clearCompleted() {
+  clearCompleted() {
     this.state.tasks = this.state.tasks.filter((t) => !t.completed);
 
     this.render();
-    await saveTasks(this.state.tasks, this.ui.filtered);
+    saveTasks(this.state.tasks, this.ui.filtered);
   },
   renderFilterTasks() {
     const filterStatus = ["all", "active", "completed"];
@@ -196,14 +200,14 @@ const app = {
         filterButton.classList.add("active-filter");
       }
 
-      filterButton.addEventListener("click", async () => {
+      filterButton.addEventListener("click", () => {
         const buttons = document.querySelectorAll(".todo-filter__btn");
         buttons.forEach((el) => el.classList.remove("active-filter"));
         filterButton.classList.add("active-filter");
 
         this.ui.filtered = element;
         this.render();
-        await saveTasks(this.state.tasks, this.ui.filtered);
+        saveTasks(this.state.tasks, this.ui.filtered);
       });
 
       filterTask.append(filterButton);
@@ -217,7 +221,7 @@ const app = {
     const list = document.createElement("ul");
     list.classList.add("todo-list");
 
-    list.addEventListener("click", async (event) => {
+    list.addEventListener("click", (event) => {
       if (event.target.classList.contains("todo-list__item-checkbox")) {
         const item = event.target.closest("li");
         if (!item) return;
@@ -226,7 +230,7 @@ const app = {
         const todo = this.state.tasks.find((task) => task.id === id);
         todo.completed = !todo.completed;
         this.render();
-        await saveTasks(this.state.tasks, this.ui.filtered);
+        saveTasks(this.state.tasks, this.ui.filtered);
       }
 
       if (event.target.classList.contains("todo-list__item-remove")) {
@@ -236,12 +240,12 @@ const app = {
         const id = item.dataset.id;
         item.classList.add("todo-list__item-removing");
 
-        item.addEventListener("transitionend", async (event) => {
+        item.addEventListener("transitionend", (event) => {
           if (event.propertyName !== "opacity") return;
 
           this.state.tasks = this.state.tasks.filter((task) => task.id !== id);
           this.render();
-          await saveTasks(this.state.tasks, this.ui.filtered);
+          saveTasks(this.state.tasks, this.ui.filtered);
         });
       }
     });
@@ -263,7 +267,7 @@ const app = {
       }
     });
 
-    list.addEventListener("keydown", async (event) => {
+    list.addEventListener("keydown", (event) => {
       const isEnter = event.key === "Enter";
       const isDescription = event.target.classList.contains(
         "todo-list__item-description"
@@ -289,7 +293,7 @@ const app = {
         task.title = newValue;
         task.editing = false;
         this.render();
-        await saveTasks(this.state.tasks, this.ui.filtered);
+        saveTasks(this.state.tasks, this.ui.filtered);
       }
     });
 
@@ -327,7 +331,7 @@ const app = {
   handleAddTodoSubmit() {
     const { form, input } = this;
 
-    form.addEventListener("submit", async (event) => {
+    form.addEventListener("submit", (event) => {
       event.preventDefault();
 
       if (input.value.trim()) {
@@ -340,7 +344,7 @@ const app = {
 
         this.state.tasks.push(newTodo);
         this.render();
-        await saveTasks(this.state.tasks, this.ui.filtered);
+        saveTasks(this.state.tasks, this.ui.filtered);
 
         input.value = "";
         this.ui.isFormOpen = false;
