@@ -32,7 +32,7 @@ Each phase represents a new level of frontend skills: DOM → State → UX → S
 
 - [x] Step 12 — Inline task editing
 - [x] Step 13 — Animations (add/remove)
-- [ ] Step 14 — Mock API sync (optional)
+- [x] Step 14 — Mock API sync (optional)
 
 ## Phase F — Moving Toward Vue
 
