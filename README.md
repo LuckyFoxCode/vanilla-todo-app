@@ -3,7 +3,7 @@
 A learning Todo application built with pure JavaScript (no frameworks).
 The project is focused on understanding core frontend concepts: DOM, state management, rendering logic, and application architecture.
 
-👉 Live demo: https://luckyfoxcode.github.io/vanila-todo-app/
+[👉 Live demo:](https://luckyfoxcode.github.io/vanilla-todo-app/)
 
 ---
 
@@ -66,7 +66,7 @@ index.html
 ## 🚀 Run Locally
 
 ```bash
-git clone https://github.com/LuckyFoxCode/vanila-todos.git
+git clone https://github.com/LuckyFoxCode/vanilla-todo-app.git
 cd vanila-todo-app
 ```
 
