@@ -3,6 +3,7 @@ import { state, ui } from "./state.js";
 import {
   renderAddTodoButton,
   renderApp,
+  renderStatistics,
   renderTodoForm,
   updateFormVisibility,
 } from "./ui.js";
@@ -20,5 +21,6 @@ export async function initApp() {
   renderApp();
   renderTodoForm();
   renderAddTodoButton();
+  renderStatistics();
   updateFormVisibility();
 }

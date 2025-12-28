@@ -108,83 +108,83 @@ const app = {
   //   this.isOpenFormBtn = isOpenFormBtn;
   //   root.append(isOpenFormBtn);
   // },
-  renderStats() {
-    const { tasks } = this.state;
+  // renderStats() {
+  //   const { tasks } = this.state;
 
-    const stats = document.createElement("section");
-    stats.classList.add("todo-stats");
+  //   const stats = document.createElement("section");
+  //   stats.classList.add("todo-stats");
 
-    const statsHeader = document.createElement("div");
-    statsHeader.classList.add("todo-stats__header");
+  //   const statsHeader = document.createElement("div");
+  //   statsHeader.classList.add("todo-stats__header");
 
-    const title = document.createElement("h1");
-    title.classList.add("todo-stats__header-title");
-    title.textContent = "my tasks";
+  //   const title = document.createElement("h1");
+  //   title.classList.add("todo-stats__header-title");
+  //   title.textContent = "my tasks";
 
-    const removeCompletedTasks = document.createElement("button");
-    removeCompletedTasks.classList.add("todo-stats__header-clear");
-    removeCompletedTasks.type = "button";
-    removeCompletedTasks.textContent = "clear ✔️";
+  //   const removeCompletedTasks = document.createElement("button");
+  //   removeCompletedTasks.classList.add("todo-stats__header-clear");
+  //   removeCompletedTasks.type = "button";
+  //   removeCompletedTasks.textContent = "clear ✔️";
 
-    removeCompletedTasks.addEventListener("click", () => this.clearCompleted());
+  //   removeCompletedTasks.addEventListener("click", () => this.clearCompleted());
 
-    const wrapper = document.createElement("div");
-    wrapper.classList.add("todo-stats__wrapper");
+  //   const wrapper = document.createElement("div");
+  //   wrapper.classList.add("todo-stats__wrapper");
 
-    this.statsCounters = [];
+  //   this.statsCounters = [];
 
-    const all = tasks.length;
-    const active = tasks.filter((t) => !t.completed).length;
-    const completed = tasks.filter((t) => t.completed).length;
+  //   const all = tasks.length;
+  //   const active = tasks.filter((t) => !t.completed).length;
+  //   const completed = tasks.filter((t) => t.completed).length;
 
-    const statsData = [
-      { label: "All", count: all },
-      { label: "Active", count: active },
-      { label: "Completed", count: completed },
-    ];
+  //   const statsData = [
+  //     { label: "All", count: all },
+  //     { label: "Active", count: active },
+  //     { label: "Completed", count: completed },
+  //   ];
 
-    statsData.forEach((item) => {
-      const card = document.createElement("div");
-      card.classList.add("todo-stats__card");
+  //   statsData.forEach((item) => {
+  //     const card = document.createElement("div");
+  //     card.classList.add("todo-stats__card");
 
-      const title = document.createElement("span");
-      title.textContent = item.label;
+  //     const title = document.createElement("span");
+  //     title.textContent = item.label;
 
-      const count = document.createElement("span");
-      count.textContent = item.count;
+  //     const count = document.createElement("span");
+  //     count.textContent = item.count;
 
-      this.statsCounters.push(count);
+  //     this.statsCounters.push(count);
 
-      card.append(title, count);
-      wrapper.append(card);
-    });
+  //     card.append(title, count);
+  //     wrapper.append(card);
+  //   });
 
-    this.stats = stats;
-    this.removeCompletedTasks = removeCompletedTasks;
+  //   this.stats = stats;
+  //   this.removeCompletedTasks = removeCompletedTasks;
 
-    statsHeader.append(title, removeCompletedTasks);
-    stats.append(statsHeader, wrapper);
-    this.root.prepend(stats);
-  },
-  updateStats() {
-    const { tasks } = this.state;
+  //   statsHeader.append(title, removeCompletedTasks);
+  //   stats.append(statsHeader, wrapper);
+  //   this.root.prepend(stats);
+  // },
+  // updateStats() {
+  //   const { tasks } = this.state;
 
-    if (!this.statsCounters) return;
+  //   if (!this.statsCounters) return;
 
-    const all = tasks.length;
-    const active = tasks.filter((t) => !t.completed).length;
-    const completed = tasks.filter((t) => t.completed).length;
+  //   const all = tasks.length;
+  //   const active = tasks.filter((t) => !t.completed).length;
+  //   const completed = tasks.filter((t) => t.completed).length;
 
-    const values = [all, active, completed];
+  //   const values = [all, active, completed];
 
-    this.statsCounters.forEach((el, idx) => (el.textContent = values[idx]));
-  },
-  clearCompleted() {
-    this.state.tasks = this.state.tasks.filter((t) => !t.completed);
+  //   this.statsCounters.forEach((el, idx) => (el.textContent = values[idx]));
+  // },
+  // clearCompleted() {
+  //   this.state.tasks = this.state.tasks.filter((t) => !t.completed);
 
-    this.render();
-    saveTasks(this.state.tasks, this.ui.filtered);
-  },
+  //   this.render();
+  //   saveTasks(this.state.tasks, this.ui.filtered);
+  // },
   renderFilterTasks() {
     const filterStatus = ["all", "active", "completed"];
 
@@ -382,25 +382,25 @@ const app = {
       this.counterText.textContent = "You still have things to conquer 💪";
     }
   },
-  render() {
-    const { list } = this;
-    let activeTasks = this.state.tasks;
+  // render() {
+  //   const { list } = this;
+  //   let activeTasks = this.state.tasks;
 
-    list.innerHTML = "";
+  //   list.innerHTML = "";
 
-    if (this.ui.filtered === "active") {
-      activeTasks = activeTasks.filter((t) => !t.completed);
-    } else if (this.ui.filtered === "completed") {
-      activeTasks = activeTasks.filter((t) => t.completed);
-    }
-    activeTasks.forEach((todo) => {
-      const item = this.createTodoItem(todo);
-      list.append(item);
-    });
+  //   if (this.ui.filtered === "active") {
+  //     activeTasks = activeTasks.filter((t) => !t.completed);
+  //   } else if (this.ui.filtered === "completed") {
+  //     activeTasks = activeTasks.filter((t) => t.completed);
+  //   }
+  //   activeTasks.forEach((todo) => {
+  //     const item = this.createTodoItem(todo);
+  //     list.append(item);
+  //   });
 
-    this.renderInfo();
-    this.updateStats();
-  },
+  //   this.renderInfo();
+  //   this.updateStats();
+  // },
 };
 
 document.addEventListener("DOMContentLoaded", initApp);

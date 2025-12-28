@@ -1,4 +1,5 @@
-import { ui } from "./state.js";
+import { saveTasks } from "./api.js";
+import { state, ui } from "./state.js";
 
 let root = null;
 let overlay = null;
@@ -6,6 +7,9 @@ let form = null;
 let input = null;
 let button = null;
 let isOpenFormBtn = null;
+let stats = null;
+
+const statsCounters = [];
 
 export function renderApp() {
   root = document.createElement("div");
@@ -66,4 +70,92 @@ export function renderAddTodoButton() {
   });
 
   root.append(isOpenFormBtn);
+}
+
+export function renderStatistics() {
+  stats = document.createElement("section");
+  stats.classList.add("todo-stats");
+
+  const statsHeader = document.createElement("div");
+  statsHeader.classList.add("todo-stats__header");
+
+  const title = document.createElement("h1");
+  title.classList.add("todo-stats__header-title");
+  title.textContent = "my tasks";
+
+  const removeCompletedTasks = document.createElement("button");
+  removeCompletedTasks.classList.add("todo-stats__header-clear");
+  removeCompletedTasks.type = "button";
+  removeCompletedTasks.textContent = "clear ✔️";
+  removeCompletedTasks.addEventListener("click", () => clearCompletedTasks());
+
+  const wrapper = document.createElement("div");
+  wrapper.classList.add("todo-stats__wrapper");
+
+  const allTasks = state.tasks.length;
+  const activeTasks = state.tasks.filter((t) => !t.completed).length;
+  const completedTasks = state.tasks.filter((t) => t.completed).length;
+
+  const statsData = [
+    { label: "All", count: allTasks },
+    { label: "Active", count: activeTasks },
+    { label: "Completed", count: completedTasks },
+  ];
+
+  statsData.forEach((item) => {
+    const card = document.createElement("div");
+    card.classList.add("todo-stats__card");
+
+    const title = document.createElement("span");
+    title.textContent = item.label;
+
+    const count = document.createElement("span");
+    count.textContent = item.count;
+
+    statsCounters.push(count);
+
+    card.append(title, count);
+    wrapper.append(card);
+  });
+
+  statsHeader.append(title, removeCompletedTasks);
+  stats.append(statsHeader, wrapper);
+  root.prepend(stats);
+}
+
+function clearCompletedTasks() {
+  state.tasks = state.tasks.filter((t) => !t.completed);
+  render();
+  saveTasks(state.tasks, ui.filtered);
+}
+
+function updateStats() {
+  if (statsCounters) return;
+
+  const allTasks = state.tasks.length;
+  const activeTasks = state.tasks.filter((t) => !t.completed).length;
+  const completedTasks = state.tasks.filter((t) => t.completed).length;
+
+  const values = [allTasks, activeTasks, completedTasks];
+  statsCounters.forEach((el, idx) => (el.textContent = values[idx]));
+}
+
+export function render() {
+  let activeTasks = state.tasks;
+
+  // list.innerHTML = "";
+
+  if (ui.filtered === "active") {
+    activeTasks = activeTasks.filter((t) => !t.completed);
+  } else if (ui.filtered === "completed") {
+    activeTasks = activeTasks.filter((t) => t.completed);
+  }
+
+  activeTasks.forEach((todo) => {
+    // const item = createTodoItem(todo)
+    // list.append(item)
+  });
+
+  // renderInfo()
+  updateStats();
 }
