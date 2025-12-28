@@ -5,6 +5,7 @@ let overlay = null;
 let form = null;
 let input = null;
 let button = null;
+let isOpenFormBtn = null;
 
 export function renderApp() {
   root = document.createElement("div");
@@ -51,4 +52,18 @@ export function renderTodoForm() {
 export function updateFormVisibility() {
   if (!overlay) return;
   overlay.classList.toggle("todo-form-overlay--hidden", !ui.isFormOpen);
+}
+
+export function renderAddTodoButton() {
+  isOpenFormBtn = document.createElement("button");
+  isOpenFormBtn.classList.add("todo-add-btn");
+  isOpenFormBtn.textContent = "+";
+
+  isOpenFormBtn.addEventListener("click", () => {
+    ui.isFormOpen = true;
+    updateFormVisibility();
+    input.focus();
+  });
+
+  root.append(isOpenFormBtn);
 }

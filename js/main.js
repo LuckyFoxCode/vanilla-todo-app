@@ -92,22 +92,22 @@ const app = {
   //   if (!formOverlay) return;
   //   formOverlay.classList.toggle("todo-form-overlay--hidden", !isFormOpen);
   // },
-  renderAddButton() {
-    const { root } = this;
+  // renderAddButton() {
+  //   const { root } = this;
 
-    const isOpenFormBtn = document.createElement("button");
-    isOpenFormBtn.classList.add("todo-add-btn");
-    isOpenFormBtn.textContent = "+";
+  //   const isOpenFormBtn = document.createElement("button");
+  //   isOpenFormBtn.classList.add("todo-add-btn");
+  //   isOpenFormBtn.textContent = "+";
 
-    isOpenFormBtn.addEventListener("click", () => {
-      this.ui.isFormOpen = true;
-      this.updateFormVisibility();
-      this.input.focus();
-    });
+  //   isOpenFormBtn.addEventListener("click", () => {
+  //     this.ui.isFormOpen = true;
+  //     this.updateFormVisibility();
+  //     this.input.focus();
+  //   });
 
-    this.isOpenFormBtn = isOpenFormBtn;
-    root.append(isOpenFormBtn);
-  },
+  //   this.isOpenFormBtn = isOpenFormBtn;
+  //   root.append(isOpenFormBtn);
+  // },
   renderStats() {
     const { tasks } = this.state;
 
