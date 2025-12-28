@@ -1,6 +1,6 @@
 import { getTasks } from "./api.js";
 import { state, ui } from "./state.js";
-import { renderApp, renderTodoForm } from "./ui.js";
+import { renderApp, renderTodoForm, updateFormVisibility } from "./ui.js";
 
 export async function initApp() {
   try {
@@ -8,11 +8,11 @@ export async function initApp() {
 
     state.tasks = [...res.tasks];
     ui.filtered = res.filtered;
-    console.log(state, ui, "LOG");
   } catch (error) {
     console.error(error);
   }
 
   renderApp();
   renderTodoForm();
+  updateFormVisibility();
 }

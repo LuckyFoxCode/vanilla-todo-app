@@ -85,13 +85,13 @@ const app = {
   //   form.append(input, button);
   //   root.appendChild(overlay);
   // },
-  updateFormVisibility() {
-    const { isFormOpen } = this.ui;
-    const { formOverlay } = this;
+  // updateFormVisibility() {
+  //   const { isFormOpen } = this.ui;
+  //   const { formOverlay } = this;
 
-    if (!formOverlay) return;
-    formOverlay.classList.toggle("todo-form-overlay--hidden", !isFormOpen);
-  },
+  //   if (!formOverlay) return;
+  //   formOverlay.classList.toggle("todo-form-overlay--hidden", !isFormOpen);
+  // },
   renderAddButton() {
     const { root } = this;
 

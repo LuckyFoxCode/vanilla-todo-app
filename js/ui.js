@@ -1,3 +1,5 @@
+import { ui } from "./state.js";
+
 let root = null;
 let overlay = null;
 let form = null;
@@ -44,4 +46,9 @@ export function renderTodoForm() {
   overlay.append(form);
   form.append(input, button);
   root.appendChild(overlay);
+}
+
+export function updateFormVisibility() {
+  if (!overlay) return;
+  overlay.classList.toggle("todo-form-overlay--hidden", !ui.isFormOpen);
 }
