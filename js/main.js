@@ -216,91 +216,91 @@ const app = {
 
   //   this.root.append(filterTask);
   // },
-  renderTodoList() {
-    const { root } = this;
+  // renderTodoList() {
+  //   const { root } = this;
 
-    const list = document.createElement("ul");
-    list.classList.add("todo-list");
+  //   const list = document.createElement("ul");
+  //   list.classList.add("todo-list");
 
-    list.addEventListener("click", (event) => {
-      if (event.target.classList.contains("todo-list__item-checkbox")) {
-        const item = event.target.closest("li");
-        if (!item) return;
+  //   list.addEventListener("click", (event) => {
+  //     if (event.target.classList.contains("todo-list__item-checkbox")) {
+  //       const item = event.target.closest("li");
+  //       if (!item) return;
 
-        const id = item.dataset.id;
-        const todo = this.state.tasks.find((task) => task.id === id);
-        todo.completed = !todo.completed;
-        this.render();
-        saveTasks(this.state.tasks, this.ui.filtered);
-      }
+  //       const id = item.dataset.id;
+  //       const todo = this.state.tasks.find((task) => task.id === id);
+  //       todo.completed = !todo.completed;
+  //       this.render();
+  //       saveTasks(this.state.tasks, this.ui.filtered);
+  //     }
 
-      if (event.target.classList.contains("todo-list__item-remove")) {
-        const item = event.target.closest("li");
-        if (!item) return;
+  //     if (event.target.classList.contains("todo-list__item-remove")) {
+  //       const item = event.target.closest("li");
+  //       if (!item) return;
 
-        const id = item.dataset.id;
-        item.classList.add("todo-list__item-removing");
+  //       const id = item.dataset.id;
+  //       item.classList.add("todo-list__item-removing");
 
-        item.addEventListener("transitionend", (event) => {
-          if (event.propertyName !== "opacity") return;
+  //       item.addEventListener("transitionend", (event) => {
+  //         if (event.propertyName !== "opacity") return;
 
-          this.state.tasks = this.state.tasks.filter((task) => task.id !== id);
-          this.render();
-          saveTasks(this.state.tasks, this.ui.filtered);
-        });
-      }
-    });
+  //         this.state.tasks = this.state.tasks.filter((task) => task.id !== id);
+  //         this.render();
+  //         saveTasks(this.state.tasks, this.ui.filtered);
+  //       });
+  //     }
+  //   });
 
-    list.addEventListener("dblclick", (event) => {
-      if (event.target.classList.contains("todo-list__item-description")) {
-        const item = event.target.closest("li");
+  //   list.addEventListener("dblclick", (event) => {
+  //     if (event.target.classList.contains("todo-list__item-description")) {
+  //       const item = event.target.closest("li");
 
-        if (!item) return;
+  //       if (!item) return;
 
-        const id = item.dataset.id;
-        const task = this.state.tasks.find((t) => t.id === id);
-        task.editing = true;
-        this.render();
+  //       const id = item.dataset.id;
+  //       const task = this.state.tasks.find((t) => t.id === id);
+  //       task.editing = true;
+  //       this.render();
 
-        const li = this.list.querySelector(`[data-id="${id}"]`);
-        const span = li.querySelector(".todo-list__item-description");
-        span.focus();
-      }
-    });
+  //       const li = this.list.querySelector(`[data-id="${id}"]`);
+  //       const span = li.querySelector(".todo-list__item-description");
+  //       span.focus();
+  //     }
+  //   });
 
-    list.addEventListener("keydown", (event) => {
-      const isEnter = event.key === "Enter";
-      const isDescription = event.target.classList.contains(
-        "todo-list__item-description"
-      );
+  //   list.addEventListener("keydown", (event) => {
+  //     const isEnter = event.key === "Enter";
+  //     const isDescription = event.target.classList.contains(
+  //       "todo-list__item-description"
+  //     );
 
-      if (!isEnter || !isDescription) return;
+  //     if (!isEnter || !isDescription) return;
 
-      const item = event.target.closest("li");
-      if (!item) return;
+  //     const item = event.target.closest("li");
+  //     if (!item) return;
 
-      const id = item.dataset.id;
-      const task = this.state.tasks.find((t) => t.id === id);
+  //     const id = item.dataset.id;
+  //     const task = this.state.tasks.find((t) => t.id === id);
 
-      if (!task.editing) return;
-      event.preventDefault();
+  //     if (!task.editing) return;
+  //     event.preventDefault();
 
-      const newValue = event.target.textContent.trim();
+  //     const newValue = event.target.textContent.trim();
 
-      if (newValue.length === 0) {
-        task.editing = false;
-        this.render();
-      } else {
-        task.title = newValue;
-        task.editing = false;
-        this.render();
-        saveTasks(this.state.tasks, this.ui.filtered);
-      }
-    });
+  //     if (newValue.length === 0) {
+  //       task.editing = false;
+  //       this.render();
+  //     } else {
+  //       task.title = newValue;
+  //       task.editing = false;
+  //       this.render();
+  //       saveTasks(this.state.tasks, this.ui.filtered);
+  //     }
+  //   });
 
-    this.list = list;
-    root.append(list);
-  },
+  //   this.list = list;
+  //   root.append(list);
+  // },
   createTodoItem(todo) {
     const { id, title, completed, editing } = todo;
 

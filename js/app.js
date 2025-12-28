@@ -7,6 +7,7 @@ import {
   renderFilterTasks,
   renderStatistics,
   renderTodoForm,
+  renderTodoList,
   updateFormVisibility,
 } from "./ui.js";
 
@@ -24,6 +25,7 @@ export async function initApp() {
   renderTodoForm();
   renderStatistics();
   renderFilterTasks();
+  renderTodoList();
   renderAddTodoButton();
   render();
   updateFormVisibility();

@@ -8,6 +8,7 @@ let input = null;
 let button = null;
 let isOpenFormBtn = null;
 let stats = null;
+let list = null;
 
 const statsCounters = [];
 
@@ -169,6 +170,89 @@ export function renderFilterTasks() {
     filterTask.append(filterButton);
   });
   root.append(filterTask);
+}
+
+export function renderTodoList() {
+  list = document.createElement("ul");
+  list.classList.add("todo-list");
+
+  list.addEventListener("click", (event) => {
+    if (event.target.classList.contains("todo-list__item-checkbox")) {
+      const item = event.target.closest("li");
+      if (!item) return;
+
+      const id = item.dataset.id;
+      const todo = state.tasks.find((task) => task.id === id);
+      todo.completed = !todo.completed;
+      render();
+      saveTasks(state.tasks, ui.filtered);
+    }
+
+    if (event.target.classList.contains("todo-list__item-remove")) {
+      const item = event.target.closest("li");
+      if (!item) return;
+
+      const id = item.dataset.id;
+      item.classList.add("todo-list__item-removing");
+
+      item.addEventListener("transitionend", (event) => {
+        if (event.propertyName !== "opacity") return;
+
+        state.tasks = state.tasks.filter((task) => task.id !== id);
+        render();
+        saveTasks(state.tasks, ui.filtered);
+      });
+    }
+  });
+
+  list.addEventListener("dblclick", (event) => {
+    if (event.target.classList.contains("todo-list__item-description")) {
+      const item = event.target.closest("li");
+
+      if (!item) return;
+
+      const id = item.dataset.id;
+      const task = state.tasks.find((t) => t.id === id);
+      task.editing = true;
+      render();
+
+      const li = list.querySelector(`[data-id="${id}"]`);
+      const span = li.querySelector(".todo-list__item-description");
+      span.focus();
+    }
+  });
+
+  list.addEventListener("keydown", (event) => {
+    const isEnter = event.key === "Enter";
+    const isDescription = event.target.classList.contains(
+      "todo-list__item-description"
+    );
+
+    if (!isEnter || !isDescription) return;
+
+    const item = event.target.closest("li");
+    if (!item) return;
+
+    const id = item.dataset.id;
+    const task = state.tasks.find((t) => t.id === id);
+
+    if (!task.editing) return;
+    event.preventDefault();
+
+    const newValue = event.target.textContent.trim();
+
+    if (newValue.length === 0) {
+      task.editing = false;
+      render();
+    } else {
+      task.title = newValue;
+      task.editing = false;
+      render();
+      saveTasks(state.tasks, ui.filtered);
+    }
+  });
+
+  root.append(list);
 }
 
 export function render() {
