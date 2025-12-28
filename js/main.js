@@ -354,34 +354,34 @@ const app = {
       }
     });
   },
-  renderInfo() {
-    const { list } = this;
-    const { tasks } = this.state;
+  // renderInfo() {
+  //   const { list } = this;
+  //   const { tasks } = this.state;
 
-    if (!this.info) {
-      const info = document.createElement("div");
-      info.classList.add("todo-info");
+  //   if (!this.info) {
+  //     const info = document.createElement("div");
+  //     info.classList.add("todo-info");
 
-      const text = document.createElement("span");
-      info.append(text);
+  //     const text = document.createElement("span");
+  //     info.append(text);
 
-      this.info = info;
-      this.counterText = text;
+  //     this.info = info;
+  //     this.counterText = text;
 
-      list.insertAdjacentElement("afterend", info);
-    }
+  //     list.insertAdjacentElement("afterend", info);
+  //   }
 
-    const activeCount = tasks.filter((t) => !t.completed).length;
-    const totalCount = tasks.length;
+  //   const activeCount = tasks.filter((t) => !t.completed).length;
+  //   const totalCount = tasks.length;
 
-    if (totalCount === 0) {
-      this.counterText.textContent = "Zero tasks — take a deep breath 🚀";
-    } else if (activeCount === 0) {
-      this.counterText.textContent = "Perfect! You're unstoppable ✨";
-    } else {
-      this.counterText.textContent = "You still have things to conquer 💪";
-    }
-  },
+  //   if (totalCount === 0) {
+  //     this.counterText.textContent = "Zero tasks — take a deep breath 🚀";
+  //   } else if (activeCount === 0) {
+  //     this.counterText.textContent = "Perfect! You're unstoppable ✨";
+  //   } else {
+  //     this.counterText.textContent = "You still have things to conquer 💪";
+  //   }
+  // },
   // render() {
   //   const { list } = this;
   //   let activeTasks = this.state.tasks;

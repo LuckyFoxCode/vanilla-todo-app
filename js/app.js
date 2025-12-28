@@ -5,6 +5,7 @@ import {
   renderAddTodoButton,
   renderApp,
   renderFilterTasks,
+  renderInfo,
   renderStatistics,
   renderTodoForm,
   renderTodoList,
@@ -26,7 +27,8 @@ export async function initApp() {
   renderStatistics();
   renderFilterTasks();
   renderTodoList();
-  renderAddTodoButton();
+  renderInfo();
   render();
+  renderAddTodoButton();
   updateFormVisibility();
 }

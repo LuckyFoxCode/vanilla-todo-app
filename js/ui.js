@@ -9,6 +9,8 @@ let button = null;
 let isOpenFormBtn = null;
 let stats = null;
 let list = null;
+let info = null;
+let informationCounterTasks = null;
 
 const statsCounters = [];
 
@@ -255,10 +257,34 @@ export function renderTodoList() {
   root.append(list);
 }
 
+export function renderInfo() {
+  if (!info) {
+    const info = document.createElement("div");
+    info.classList.add("todo-info");
+
+    const text = document.createElement("span");
+    info.append(text);
+
+    informationCounterTasks = text;
+
+    list.insertAdjacentElement("afterend", info);
+  }
+  const activeCount = state.tasks.filter((t) => !t.completed).length;
+  const totalCount = state.tasks.length;
+
+  if (totalCount === 0) {
+    informationCounterTasks.textContent = "Zero tasks — take a deep breath 🚀";
+  } else if (activeCount === 0) {
+    informationCounterTasks.textContent = "Perfect! You're unstoppable ✨";
+  } else {
+    informationCounterTasks.textContent = "You still have things to conquer 💪";
+  }
+}
+
 export function render() {
   let activeTasks = state.tasks;
 
-  // list.innerHTML = "";
+  list.innerHTML = "";
 
   if (ui.filtered === "active") {
     activeTasks = activeTasks.filter((t) => !t.completed);
@@ -267,10 +293,10 @@ export function render() {
   }
 
   activeTasks.forEach((todo) => {
-    // const item = createTodoItem(todo)
-    // list.append(item)
+    // const item = createTodoItem(todo);
+    // list.append(item);
   });
 
-  // renderInfo()
+  // renderInfo();
   updateStats();
 }
