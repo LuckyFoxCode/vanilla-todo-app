@@ -1,4 +1,5 @@
 import { getTasks, saveTasks } from "./api.js";
+import { initApp } from "./app.js";
 
 const app = {
   state: {
@@ -402,4 +403,4 @@ const app = {
   },
 };
 
-document.addEventListener("DOMContentLoaded", () => app.init());
+document.addEventListener("DOMContentLoaded", initApp);
