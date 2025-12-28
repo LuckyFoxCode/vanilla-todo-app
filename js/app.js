@@ -1,8 +1,10 @@
 import { getTasks } from "./api.js";
 import { state, ui } from "./state.js";
 import {
+  render,
   renderAddTodoButton,
   renderApp,
+  renderFilterTasks,
   renderStatistics,
   renderTodoForm,
   updateFormVisibility,
@@ -20,7 +22,9 @@ export async function initApp() {
 
   renderApp();
   renderTodoForm();
-  renderAddTodoButton();
   renderStatistics();
+  renderFilterTasks();
+  renderAddTodoButton();
+  render();
   updateFormVisibility();
 }

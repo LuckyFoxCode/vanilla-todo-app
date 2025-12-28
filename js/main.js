@@ -185,37 +185,37 @@ const app = {
   //   this.render();
   //   saveTasks(this.state.tasks, this.ui.filtered);
   // },
-  renderFilterTasks() {
-    const filterStatus = ["all", "active", "completed"];
+  // renderFilterTasks() {
+  //   const filterStatus = ["all", "active", "completed"];
 
-    const filterTask = document.createElement("section");
-    filterTask.classList.add("todo-filter");
+  //   const filterTask = document.createElement("section");
+  //   filterTask.classList.add("todo-filter");
 
-    filterStatus.forEach((element) => {
-      const filterButton = document.createElement("button");
-      filterButton.classList.add("todo-filter__btn");
-      filterButton.textContent = element;
-      filterButton.dataset.filter = element;
+  //   filterStatus.forEach((element) => {
+  //     const filterButton = document.createElement("button");
+  //     filterButton.classList.add("todo-filter__btn");
+  //     filterButton.textContent = element;
+  //     filterButton.dataset.filter = element;
 
-      if (this.ui.filtered === element) {
-        filterButton.classList.add("active-filter");
-      }
+  //     if (this.ui.filtered === element) {
+  //       filterButton.classList.add("active-filter");
+  //     }
 
-      filterButton.addEventListener("click", () => {
-        const buttons = document.querySelectorAll(".todo-filter__btn");
-        buttons.forEach((el) => el.classList.remove("active-filter"));
-        filterButton.classList.add("active-filter");
+  //     filterButton.addEventListener("click", () => {
+  //       const buttons = document.querySelectorAll(".todo-filter__btn");
+  //       buttons.forEach((el) => el.classList.remove("active-filter"));
+  //       filterButton.classList.add("active-filter");
 
-        this.ui.filtered = element;
-        this.render();
-        saveTasks(this.state.tasks, this.ui.filtered);
-      });
+  //       this.ui.filtered = element;
+  //       this.render();
+  //       saveTasks(this.state.tasks, this.ui.filtered);
+  //     });
 
-      filterTask.append(filterButton);
-    });
+  //     filterTask.append(filterButton);
+  //   });
 
-    this.root.append(filterTask);
-  },
+  //   this.root.append(filterTask);
+  // },
   renderTodoList() {
     const { root } = this;
 

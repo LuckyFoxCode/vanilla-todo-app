@@ -140,6 +140,37 @@ function updateStats() {
   statsCounters.forEach((el, idx) => (el.textContent = values[idx]));
 }
 
+export function renderFilterTasks() {
+  const filterStatus = ["all", "active", "completed"];
+
+  const filterTask = document.createElement("section");
+  filterTask.classList.add("todo-filter");
+
+  filterStatus.forEach((element) => {
+    const filterButton = document.createElement("button");
+    filterButton.classList.add("todo-filter__btn");
+    filterButton.textContent = element;
+    filterButton.dataset.filter = element;
+
+    if (ui.filtered === element) {
+      filterButton.classList.add("active-filter");
+    }
+
+    filterButton.addEventListener("click", () => {
+      const buttons = document.querySelectorAll(".todo-filter__btn");
+      buttons.forEach((el) => el.classList.remove("active-filter"));
+      filterButton.classList.add("active-filter");
+
+      ui.filtered = element;
+      render();
+      saveTasks(state.tasks, ui.filtered);
+    });
+
+    filterTask.append(filterButton);
+  });
+  root.append(filterTask);
+}
+
 export function render() {
   let activeTasks = state.tasks;
 
