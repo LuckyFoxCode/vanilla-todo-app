@@ -1,4 +1,8 @@
 let root = null;
+let overlay = null;
+let form = null;
+let input = null;
+let button = null;
 
 export function renderApp() {
   root = document.createElement("div");
@@ -7,6 +11,37 @@ export function renderApp() {
   document.body.appendChild(root);
 }
 
-export function getRoot() {
-  return root;
+export function renderTodoForm() {
+  overlay = document.createElement("div");
+  overlay.classList.add("todo-form-overlay");
+  overlay.classList.add("todo-form-overlay--hidden");
+
+  form = document.createElement("form");
+  form.classList.add("todo-form");
+
+  input = document.createElement("input");
+  input.type = "text";
+  input.classList.add("todo-form__input");
+  input.name = "todo";
+  input.placeholder = "Add a todo";
+  input.required = true;
+  input.autocomplete = "off";
+  input.minLength = 2;
+  input.maxLength = 30;
+
+  input.addEventListener("invalid", () => {
+    input.classList.add("todo-form__input-error");
+  });
+  input.addEventListener("input", () => {
+    input.classList.remove("todo-form__input-error");
+  });
+
+  button = document.createElement("button");
+  button.type = "submit";
+  button.classList.add("todo-form__button");
+  button.textContent = "Add";
+
+  overlay.append(form);
+  form.append(input, button);
+  root.appendChild(overlay);
 }

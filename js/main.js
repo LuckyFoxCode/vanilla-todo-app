@@ -2,24 +2,24 @@ import { getTasks, saveTasks } from "./api.js";
 import { initApp } from "./app.js";
 
 const app = {
-  state: {
-    tasks: [],
-  },
-  ui: {
-    isFormOpen: false,
-    filtered: "all",
-  },
+  // state: {
+  //   tasks: [],
+  // },
+  // ui: {
+  //   isFormOpen: false,
+  //   filtered: "all",
+  // },
   async init() {
-    try {
-      const data = await getTasks();
+    // try {
+    //   const data = await getTasks();
 
-      this.state.tasks = [...data.tasks];
-      this.ui.filtered = data.filtered;
-    } catch (error) {
-      console.error(error);
-    }
+    //   this.state.tasks = [...data.tasks];
+    //   this.ui.filtered = data.filtered;
+    // } catch (error) {
+    //   console.error(error);
+    // }
 
-    this.renderApp();
+    // this.renderApp();
     this.renderTodoForm();
     this.renderStats();
     this.renderFilterTasks();
@@ -38,53 +38,53 @@ const app = {
       }
     });
   },
-  renderApp() {
-    const root = document.createElement("div");
-    root.classList.add("todo");
+  // renderApp() {
+  //   const root = document.createElement("div");
+  //   root.classList.add("todo");
 
-    this.root = root;
-    document.body.appendChild(root);
-  },
-  renderTodoForm() {
-    const { root } = this;
+  //   this.root = root;
+  //   document.body.appendChild(root);
+  // },
+  // renderTodoForm() {
+  //   const { root } = this;
 
-    const overlay = document.createElement("div");
-    overlay.classList.add("todo-form-overlay");
-    overlay.classList.add("todo-form-overlay--hidden");
+  //   const overlay = document.createElement("div");
+  //   overlay.classList.add("todo-form-overlay");
+  //   overlay.classList.add("todo-form-overlay--hidden");
 
-    const form = document.createElement("form");
-    form.classList.add("todo-form");
+  //   const form = document.createElement("form");
+  //   form.classList.add("todo-form");
 
-    const input = document.createElement("input");
-    input.type = "text";
-    input.classList.add("todo-form__input");
-    input.name = "todo";
-    input.placeholder = "Add a todo";
-    input.required = true;
-    input.autocomplete = "off";
-    input.minLength = 2;
-    input.maxLength = 30;
-    input.addEventListener("invalid", () => {
-      input.classList.add("todo-form__input-error");
-    });
-    input.addEventListener("input", () => {
-      input.classList.remove("todo-form__input-error");
-    });
+  //   const input = document.createElement("input");
+  //   input.type = "text";
+  //   input.classList.add("todo-form__input");
+  //   input.name = "todo";
+  //   input.placeholder = "Add a todo";
+  //   input.required = true;
+  //   input.autocomplete = "off";
+  //   input.minLength = 2;
+  //   input.maxLength = 30;
+  //   input.addEventListener("invalid", () => {
+  //     input.classList.add("todo-form__input-error");
+  //   });
+  //   input.addEventListener("input", () => {
+  //     input.classList.remove("todo-form__input-error");
+  //   });
 
-    const button = document.createElement("button");
-    button.type = "submit";
-    button.classList.add("todo-form__button");
-    button.textContent = "Add";
+  //   const button = document.createElement("button");
+  //   button.type = "submit";
+  //   button.classList.add("todo-form__button");
+  //   button.textContent = "Add";
 
-    this.formOverlay = overlay;
-    this.form = form;
-    this.input = input;
-    this.button = button;
+  //   this.formOverlay = overlay;
+  //   this.form = form;
+  //   this.input = input;
+  //   this.button = button;
 
-    overlay.append(form);
-    form.append(input, button);
-    root.appendChild(overlay);
-  },
+  //   overlay.append(form);
+  //   form.append(input, button);
+  //   root.appendChild(overlay);
+  // },
   updateFormVisibility() {
     const { isFormOpen } = this.ui;
     const { formOverlay } = this;

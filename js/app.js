@@ -1,6 +1,6 @@
 import { getTasks } from "./api.js";
 import { state, ui } from "./state.js";
-import { renderApp } from "./ui.js";
+import { renderApp, renderTodoForm } from "./ui.js";
 
 export async function initApp() {
   try {
@@ -14,4 +14,5 @@ export async function initApp() {
   }
 
   renderApp();
+  renderTodoForm();
 }
