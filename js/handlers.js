@@ -24,17 +24,13 @@ export function bindTaskActions(list) {
       const id = item.dataset.id;
       item.classList.add("todo-list__item-removing");
 
-      item.addEventListener(
-        "transitionend",
-        (event) => {
-          if (event.propertyName !== "opacity") return;
+      item.addEventListener("transitionend", (event) => {
+        if (event.propertyName !== "opacity") return;
 
-          state.tasks = state.tasks.filter((task) => task.id !== id);
-          render();
-          saveTasks(state.tasks, ui.filtered);
-        },
-        { once: true }
-      );
+        state.tasks = state.tasks.filter((task) => task.id !== id);
+        render();
+        saveTasks(state.tasks, ui.filtered);
+      });
     }
   });
 }
