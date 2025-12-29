@@ -2,6 +2,16 @@ import { saveTasks } from "./api.js";
 import { state, ui } from "./state.js";
 import { render, updateFormVisibility } from "./ui.js";
 
+export function bindEscapeForm(isOpenFormBtn) {
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && ui.isFormOpen) {
+      ui.isFormOpen = false;
+      updateFormVisibility();
+      isOpenFormBtn.focus();
+    }
+  });
+}
+
 export function bindTaskActions(list) {
   list.addEventListener("click", (event) => {
     if (event.target.classList.contains("todo-list__item-checkbox")) {

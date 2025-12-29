@@ -1,5 +1,5 @@
 import { getTasks } from "./api.js";
-import { handleAddTodoSubmit } from "./handlers.js";
+import { bindEscapeForm, handleAddTodoSubmit } from "./handlers.js";
 import { state, ui } from "./state.js";
 import {
   getUiRefs,
@@ -27,6 +27,7 @@ export async function initApp() {
   renderTodoForm();
   renderAddTodoButton();
   const { form, input, isOpenFormBtn } = getUiRefs();
+  bindEscapeForm(isOpenFormBtn);
   handleAddTodoSubmit(form, input, isOpenFormBtn);
   renderStatistics();
   renderFilterTasks();
