@@ -36,8 +36,8 @@ Each phase represents a new level of frontend skills: DOM → State → UX → S
 
 ## Phase F — Moving Toward Vue
 
-- [ ] Step 15 — Split project into modules (ESM)
-- [ ] Step 16 — README + GitHub Pages deployment
+- [x] Step 15 — Split project into modules (ESM)
+- [x] Step 16 — README + GitHub Pages deployment
 
 ---
 
