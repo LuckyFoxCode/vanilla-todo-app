@@ -1,11 +1,12 @@
 import { getTasks } from "./api.js";
+import { handleAddTodoSubmit } from "./handlers.js";
 import { state, ui } from "./state.js";
 import {
+  getUiRefs,
   render,
   renderAddTodoButton,
   renderApp,
   renderFilterTasks,
-  renderInfo,
   renderStatistics,
   renderTodoForm,
   renderTodoList,
@@ -24,11 +25,12 @@ export async function initApp() {
 
   renderApp();
   renderTodoForm();
+  renderAddTodoButton();
+  const { form, input, isOpenFormBtn } = getUiRefs();
+  handleAddTodoSubmit(form, input, isOpenFormBtn);
   renderStatistics();
   renderFilterTasks();
   renderTodoList();
-  renderInfo();
   render();
-  renderAddTodoButton();
   updateFormVisibility();
 }

@@ -301,59 +301,59 @@ const app = {
   //   this.list = list;
   //   root.append(list);
   // },
-  createTodoItem(todo) {
-    const { id, title, completed, editing } = todo;
+  // createTodoItem(todo) {
+  //   const { id, title, completed, editing } = todo;
 
-    const item = document.createElement("li");
-    item.classList.add("todo-list__item");
-    item.dataset.id = id;
+  //   const item = document.createElement("li");
+  //   item.classList.add("todo-list__item");
+  //   item.dataset.id = id;
 
-    const description = document.createElement("span");
-    description.classList.add("todo-list__item-description");
-    description.textContent = title;
+  //   const description = document.createElement("span");
+  //   description.classList.add("todo-list__item-description");
+  //   description.textContent = title;
 
-    if (editing) description.contentEditable = true;
+  //   if (editing) description.contentEditable = true;
 
-    const checkbox = document.createElement("input");
-    checkbox.classList.add("todo-list__item-checkbox");
-    checkbox.type = "checkbox";
-    checkbox.checked = completed;
+  //   const checkbox = document.createElement("input");
+  //   checkbox.classList.add("todo-list__item-checkbox");
+  //   checkbox.type = "checkbox";
+  //   checkbox.checked = completed;
 
-    if (completed) item.classList.add("completed");
+  //   if (completed) item.classList.add("completed");
 
-    const deleteBtn = document.createElement("button");
-    deleteBtn.classList.add("todo-list__item-remove");
-    deleteBtn.type = "button";
-    deleteBtn.textContent = "🗑️";
+  //   const deleteBtn = document.createElement("button");
+  //   deleteBtn.classList.add("todo-list__item-remove");
+  //   deleteBtn.type = "button";
+  //   deleteBtn.textContent = "🗑️";
 
-    item.append(description, checkbox, deleteBtn);
-    return item;
-  },
-  handleAddTodoSubmit() {
-    const { form, input } = this;
+  //   item.append(description, checkbox, deleteBtn);
+  //   return item;
+  // },
+  // handleAddTodoSubmit() {
+  //   const { form, input } = this;
 
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
+  //   form.addEventListener("submit", (event) => {
+  //     event.preventDefault();
 
-      if (input.value.trim()) {
-        const newTodo = {
-          id: crypto.randomUUID(),
-          title: input.value,
-          completed: false,
-          editing: false,
-        };
+  //     if (input.value.trim()) {
+  //       const newTodo = {
+  //         id: crypto.randomUUID(),
+  //         title: input.value,
+  //         completed: false,
+  //         editing: false,
+  //       };
 
-        this.state.tasks.push(newTodo);
-        this.render();
-        saveTasks(this.state.tasks, this.ui.filtered);
+  //       this.state.tasks.push(newTodo);
+  //       this.render();
+  //       saveTasks(this.state.tasks, this.ui.filtered);
 
-        input.value = "";
-        this.ui.isFormOpen = false;
-        this.updateFormVisibility();
-        this.isOpenFormBtn.focus();
-      }
-    });
-  },
+  //       input.value = "";
+  //       this.ui.isFormOpen = false;
+  //       this.updateFormVisibility();
+  //       this.isOpenFormBtn.focus();
+  //     }
+  //   });
+  // },
   // renderInfo() {
   //   const { list } = this;
   //   const { tasks } = this.state;

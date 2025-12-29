@@ -1,4 +1,5 @@
 import { saveTasks } from "./api.js";
+import { bindTaskActions, bindTaskEditing } from "./handlers.js";
 import { state, ui } from "./state.js";
 
 let root = null;
@@ -13,6 +14,10 @@ let info = null;
 let informationCounterTasks = null;
 
 const statsCounters = [];
+
+export function getUiRefs() {
+  return { form, input, isOpenFormBtn, list, overlay };
+}
 
 export function renderApp() {
   root = document.createElement("div");
@@ -133,7 +138,7 @@ function clearCompletedTasks() {
 }
 
 function updateStats() {
-  if (statsCounters) return;
+  if (!statsCounters) return;
 
   const allTasks = state.tasks.length;
   const activeTasks = state.tasks.filter((t) => !t.completed).length;
@@ -171,6 +176,7 @@ export function renderFilterTasks() {
 
     filterTask.append(filterButton);
   });
+
   root.append(filterTask);
 }
 
@@ -178,95 +184,49 @@ export function renderTodoList() {
   list = document.createElement("ul");
   list.classList.add("todo-list");
 
-  list.addEventListener("click", (event) => {
-    if (event.target.classList.contains("todo-list__item-checkbox")) {
-      const item = event.target.closest("li");
-      if (!item) return;
-
-      const id = item.dataset.id;
-      const todo = state.tasks.find((task) => task.id === id);
-      todo.completed = !todo.completed;
-      render();
-      saveTasks(state.tasks, ui.filtered);
-    }
-
-    if (event.target.classList.contains("todo-list__item-remove")) {
-      const item = event.target.closest("li");
-      if (!item) return;
-
-      const id = item.dataset.id;
-      item.classList.add("todo-list__item-removing");
-
-      item.addEventListener("transitionend", (event) => {
-        if (event.propertyName !== "opacity") return;
-
-        state.tasks = state.tasks.filter((task) => task.id !== id);
-        render();
-        saveTasks(state.tasks, ui.filtered);
-      });
-    }
-  });
-
-  list.addEventListener("dblclick", (event) => {
-    if (event.target.classList.contains("todo-list__item-description")) {
-      const item = event.target.closest("li");
-
-      if (!item) return;
-
-      const id = item.dataset.id;
-      const task = state.tasks.find((t) => t.id === id);
-      task.editing = true;
-      render();
-
-      const li = list.querySelector(`[data-id="${id}"]`);
-      const span = li.querySelector(".todo-list__item-description");
-      span.focus();
-    }
-  });
-
-  list.addEventListener("keydown", (event) => {
-    const isEnter = event.key === "Enter";
-    const isDescription = event.target.classList.contains(
-      "todo-list__item-description"
-    );
-
-    if (!isEnter || !isDescription) return;
-
-    const item = event.target.closest("li");
-    if (!item) return;
-
-    const id = item.dataset.id;
-    const task = state.tasks.find((t) => t.id === id);
-
-    if (!task.editing) return;
-    event.preventDefault();
-
-    const newValue = event.target.textContent.trim();
-
-    if (newValue.length === 0) {
-      task.editing = false;
-      render();
-    } else {
-      task.title = newValue;
-      task.editing = false;
-      render();
-      saveTasks(state.tasks, ui.filtered);
-    }
-  });
+  bindTaskActions(list);
+  bindTaskEditing(list);
 
   root.append(list);
 }
 
+function createTodoItem(todo) {
+  const { id, title, completed, editing } = todo;
+
+  const item = document.createElement("li");
+  item.classList.add("todo-list__item");
+  item.dataset.id = id;
+
+  const description = document.createElement("span");
+  description.classList.add("todo-list__item-description");
+  description.textContent = title;
+
+  if (editing) description.contentEditable = true;
+
+  const checkbox = document.createElement("input");
+  checkbox.classList.add("todo-list__item-checkbox");
+  checkbox.type = "checkbox";
+  checkbox.checked = completed;
+
+  if (completed) item.classList.add("completed");
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.classList.add("todo-list__item-remove");
+  deleteBtn.type = "button";
+  deleteBtn.textContent = "🗑️";
+
+  item.append(description, checkbox, deleteBtn);
+  return item;
+}
+
 export function renderInfo() {
   if (!info) {
-    const info = document.createElement("div");
+    info = document.createElement("div");
     info.classList.add("todo-info");
 
     const text = document.createElement("span");
     info.append(text);
-
     informationCounterTasks = text;
-
     list.insertAdjacentElement("afterend", info);
   }
   const activeCount = state.tasks.filter((t) => !t.completed).length;
@@ -283,7 +243,6 @@ export function renderInfo() {
 
 export function render() {
   let activeTasks = state.tasks;
-
   list.innerHTML = "";
 
   if (ui.filtered === "active") {
@@ -293,10 +252,10 @@ export function render() {
   }
 
   activeTasks.forEach((todo) => {
-    // const item = createTodoItem(todo);
-    // list.append(item);
+    const item = createTodoItem(todo);
+    list.append(item);
   });
 
-  // renderInfo();
+  renderInfo();
   updateStats();
 }
