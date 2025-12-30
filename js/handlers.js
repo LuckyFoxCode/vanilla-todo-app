@@ -1,8 +1,6 @@
-import { saveTasks } from "./api.js";
 import { state, ui } from "./state.js";
-import { render, updateFormVisibility } from "./ui.js";
 
-export function bindEscapeForm(isOpenFormBtn) {
+export function bindEscapeForm(isOpenFormBtn, { updateFormVisibility }) {
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && ui.isFormOpen) {
       ui.isFormOpen = false;
@@ -12,7 +10,7 @@ export function bindEscapeForm(isOpenFormBtn) {
   });
 }
 
-export function bindTaskActions(list) {
+export function bindTaskActions(list, { render, saveTasks }) {
   list.addEventListener("click", (event) => {
     if (event.target.classList.contains("todo-list__item-checkbox")) {
       const item = event.target.closest("li");
@@ -45,7 +43,7 @@ export function bindTaskActions(list) {
   });
 }
 
-export function bindTaskEditing(list) {
+export function bindTaskEditing(list, { render, saveTasks }) {
   list.addEventListener("dblclick", (event) => {
     if (event.target.classList.contains("todo-list__item-description")) {
       const item = event.target.closest("li");
@@ -96,7 +94,12 @@ export function bindTaskEditing(list) {
   });
 }
 
-export function handleAddTodoSubmit(form, input, isOpenFormBtn) {
+export function handleAddTodoSubmit(
+  form,
+  input,
+  isOpenFormBtn,
+  { render, saveTasks, updateFormVisibility }
+) {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
 

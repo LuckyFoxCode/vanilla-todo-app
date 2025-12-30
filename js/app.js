@@ -1,5 +1,10 @@
-import { getTasks } from "./api.js";
-import { bindEscapeForm, handleAddTodoSubmit } from "./handlers.js";
+import { getTasks, saveTasks } from "./api.js";
+import {
+  bindEscapeForm,
+  bindTaskActions,
+  bindTaskEditing,
+  handleAddTodoSubmit,
+} from "./handlers.js";
 import { state, ui } from "./state.js";
 import {
   getUiRefs,
@@ -26,12 +31,19 @@ export async function initApp() {
   renderApp();
   renderTodoForm();
   renderAddTodoButton();
-  const { form, input, isOpenFormBtn } = getUiRefs();
-  bindEscapeForm(isOpenFormBtn);
-  handleAddTodoSubmit(form, input, isOpenFormBtn);
   renderStatistics();
   renderFilterTasks();
   renderTodoList();
+  const { form, input, isOpenFormBtn, list } = getUiRefs();
+  bindEscapeForm(isOpenFormBtn, { updateFormVisibility });
+
+  handleAddTodoSubmit(form, input, isOpenFormBtn, {
+    render,
+    saveTasks,
+    updateFormVisibility,
+  });
+  bindTaskActions(list, { render, saveTasks });
+  bindTaskEditing(list, { render, saveTasks });
   render();
   updateFormVisibility();
 }

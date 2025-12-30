@@ -1,5 +1,4 @@
 import { saveTasks } from "./api.js";
-import { bindTaskActions, bindTaskEditing } from "./handlers.js";
 import { state, ui } from "./state.js";
 
 let root = null;
@@ -16,7 +15,15 @@ let informationCounterTasks = null;
 const statsCounters = [];
 
 export function getUiRefs() {
-  return { form, input, isOpenFormBtn, list, overlay };
+  return {
+    form,
+    input,
+    isOpenFormBtn,
+    list,
+    overlay,
+    render,
+    updateFormVisibility,
+  };
 }
 
 export function renderApp() {
@@ -138,7 +145,7 @@ function clearCompletedTasks() {
 }
 
 function updateStats() {
-  if (!statsCounters) return;
+  if (!statsCounters.length === 0) return;
 
   const allTasks = state.tasks.length;
   const activeTasks = state.tasks.filter((t) => !t.completed).length;
@@ -184,8 +191,8 @@ export function renderTodoList() {
   list = document.createElement("ul");
   list.classList.add("todo-list");
 
-  bindTaskActions(list);
-  bindTaskEditing(list);
+  // bindTaskActions(list);
+  // bindTaskEditing(list);
 
   root.append(list);
 }
