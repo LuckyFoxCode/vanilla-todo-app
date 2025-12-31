@@ -39,11 +39,14 @@ Each phase represents a new level of frontend skills: DOM → State → UX → S
 - [x] Step 15 — Split project into modules (ESM)
 - [x] Step 16 — README + GitHub Pages deployment
 
+## Phase G — Theming & UI State
+
+- [x] Step 17 — Dark/light theme (with persistence)
+
 ---
 
 ### Optional Stretch Features
 
-- Dark/light theme (with persistence)
 - Search through tasks
 - Weekly stats
 - Export/Import JSON

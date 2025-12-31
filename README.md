@@ -3,7 +3,9 @@
 A learning Todo application built with pure JavaScript (no frameworks).
 The project is focused on understanding core frontend concepts: DOM, state management, rendering logic, and application architecture.
 
-[👉 Live demo:](https://luckyfoxcode.github.io/vanilla-todo-app/)
+The application evolves step by step following a structured roadmap — from basic DOM manipulation to UI state, persistence, and theming.
+
+[👉 Live demo](https://luckyfoxcode.github.io/vanilla-todo-app/)
 
 ---
 
@@ -19,13 +21,14 @@ The project is focused on understanding core frontend concepts: DOM, state manag
 
 This project was created to:
 
-- Practice **vanilla JavaScript**
-- Understand how frontend applications work without frameworks
+- Practice **vanilla JavaScript** without frameworks
+- Understand how frontend applications work under the hood
 - Learn:
   - application state management
   - UI rendering logic
   - event delegation
   - working with `localStorage`
+  - UI state (filters, theme)
 - Build a solid foundation before moving to **TypeScript** and **Vue**
 
 ---
@@ -38,6 +41,8 @@ This project was created to:
 - ✏️ Edit tasks (double click)
 - 🔎 Filters: All / Active / Completed
 - 💾 Persistent state via `localStorage`
+- 🌗 Dark / Light theme
+- 💾 Theme persistence via `localStorage`
 - 📊 Task statistics
 - ⌨️ Keyboard support (Enter / Escape)
 
@@ -54,7 +59,8 @@ The application follows a simple but powerful principle:
 - Minimal direct DOM manipulation
 - Event delegation is used instead of multiple listeners
 
-This approach keeps the code predictable and easier to scale.
+In addition to task data, the app also manages **UI state** (filters, theme).
+Side effects such as DOM updates and `localStorage` access are separated from core logic, keeping the code predictable and easier to scale.
 
 ---
 
@@ -62,10 +68,14 @@ This approach keeps the code predictable and easier to scale.
 
 ```text
 /js
-├── main.js # application initialization and core logic
-├── api.js # fake API layer (localStorage)
+├── main.js      # application entry point & initialization
+├── state.js     # application state
+├── ui.js        # UI rendering and DOM updates
+├── handlers.js  # event handlers
+├── api.js       # persistence layer (localStorage)
 /css
-└── styles.css
+├── base.css     # CSS variables and themes
+└── styles.css   # layout and components
 index.html
 ```
 
@@ -75,7 +85,7 @@ index.html
 
 ```bash
 git clone https://github.com/LuckyFoxCode/vanilla-todo-app.git
-cd vanila-todo-app
+cd vanilla-todo-app
 ```
 
-Open index.html using Live Server or any local web server.
+Open `index.html` using Live Server or any local web server.
