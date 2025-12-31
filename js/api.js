@@ -37,3 +37,22 @@ export function saveTasks(todos, filteredTasks) {
     }, 500);
   });
 }
+
+function isValidTheme(theme) {
+  return theme === "light" || theme === "dark";
+}
+
+export function getTheme() {
+  const theme = localStorage.getItem("vanila-todo-theme");
+  if (!isValidTheme(theme)) {
+    return "light";
+  }
+
+  return theme;
+}
+
+export function saveTheme(theme) {
+  if (!isValidTheme(theme)) return;
+
+  localStorage.setItem("vanila-todo-theme", theme);
+}
