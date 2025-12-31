@@ -111,7 +111,7 @@ export function renderStatistics() {
   const removeCompletedTasks = document.createElement("button");
   removeCompletedTasks.classList.add("todo-stats__header-clear");
   removeCompletedTasks.type = "button";
-  removeCompletedTasks.textContent = "clear ✔️";
+  removeCompletedTasks.textContent = "🧽";
   removeCompletedTasks.addEventListener("click", () => clearCompletedTasks());
 
   const wrapper = document.createElement("div");
