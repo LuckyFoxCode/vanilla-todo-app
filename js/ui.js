@@ -11,6 +11,7 @@ let stats = null;
 let list = null;
 let info = null;
 let informationCounterTasks = null;
+let themeBtn = null;
 
 const statsCounters = [];
 
@@ -21,6 +22,7 @@ export function getUiRefs() {
     isOpenFormBtn,
     list,
     overlay,
+    themeBtn,
     render,
     updateFormVisibility,
   };
@@ -98,6 +100,14 @@ export function renderStatistics() {
   title.classList.add("todo-stats__header-title");
   title.textContent = "my tasks";
 
+  const wrapperBtn = document.createElement("div");
+  wrapperBtn.classList.add("todo-stats__header-wrapperBtn");
+
+  themeBtn = document.createElement("button");
+  themeBtn.classList.add("todo-stats__header-themeBtn");
+  themeBtn.type = "button";
+  themeBtn.textContent = "☀️";
+
   const removeCompletedTasks = document.createElement("button");
   removeCompletedTasks.classList.add("todo-stats__header-clear");
   removeCompletedTasks.type = "button";
@@ -133,11 +143,11 @@ export function renderStatistics() {
     wrapper.append(card);
   });
 
-  statsHeader.append(title, removeCompletedTasks);
+  wrapperBtn.append(themeBtn, removeCompletedTasks);
+  statsHeader.append(title, wrapperBtn);
   stats.append(statsHeader, wrapper);
   root.prepend(stats);
 }
-
 function clearCompletedTasks() {
   state.tasks = state.tasks.filter((t) => !t.completed);
   render();
