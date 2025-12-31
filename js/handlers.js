@@ -1,5 +1,23 @@
 import { state, ui } from "./state.js";
 
+export function bindThemeToggle(themeBtn, { applyTheme, saveTheme }) {
+  themeBtn.addEventListener("click", () => {
+    const theme = ui.theme;
+
+    if (theme === "dark") {
+      ui.theme = "light";
+      saveTheme(ui.theme);
+      applyTheme(ui.theme);
+      themeBtn.textContent = "☀️";
+      return;
+    }
+    ui.theme = "dark";
+    saveTheme(ui.theme);
+    applyTheme(ui.theme);
+    themeBtn.textContent = "🌙";
+  });
+}
+
 export function bindEscapeForm(isOpenFormBtn, { updateFormVisibility }) {
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && ui.isFormOpen) {

@@ -1,8 +1,9 @@
-import { getTasks, getTheme, saveTasks } from "./api.js";
+import { getTasks, getTheme, saveTasks, saveTheme } from "./api.js";
 import {
   bindEscapeForm,
   bindTaskActions,
   bindTaskEditing,
+  bindThemeToggle,
   handleAddTodoSubmit,
 } from "./handlers.js";
 import { state, ui } from "./state.js";
@@ -36,9 +37,9 @@ export async function initApp() {
   renderStatistics();
   renderFilterTasks();
   renderTodoList();
-  const { form, input, isOpenFormBtn, list } = getUiRefs();
+  const { form, input, isOpenFormBtn, list, themeBtn } = getUiRefs();
+  bindThemeToggle(themeBtn, { applyTheme, saveTheme });
   bindEscapeForm(isOpenFormBtn, { updateFormVisibility });
-
   handleAddTodoSubmit(form, input, isOpenFormBtn, {
     render,
     saveTasks,
