@@ -106,7 +106,7 @@ export function renderStatistics() {
   themeBtn = document.createElement("button");
   themeBtn.classList.add("todo-stats__header-themeBtn");
   themeBtn.type = "button";
-  themeBtn.textContent = "☀️";
+  themeBtn.textContent = ui.theme === "light" ? "☀️" : "🌙";
 
   const removeCompletedTasks = document.createElement("button");
   removeCompletedTasks.classList.add("todo-stats__header-clear");

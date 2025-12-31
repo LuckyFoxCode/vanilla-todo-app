@@ -21,6 +21,10 @@ import {
 } from "./ui.js";
 
 export async function initApp() {
+  const currentTheme = getTheme();
+  ui.theme = currentTheme;
+  applyTheme(currentTheme);
+
   try {
     const res = await getTasks();
 
@@ -30,7 +34,6 @@ export async function initApp() {
     console.error(error);
   }
 
-  applyTheme(getTheme());
   renderApp();
   renderTodoForm();
   renderAddTodoButton();
