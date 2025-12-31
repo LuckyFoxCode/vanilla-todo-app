@@ -266,3 +266,12 @@ export function render() {
   renderInfo();
   updateStats();
 }
+
+export function applyTheme(theme) {
+  const rootEl = document.documentElement;
+  if (theme === "dark") {
+    rootEl.classList.add("dark");
+    return;
+  }
+  rootEl.classList.remove("dark");
+}

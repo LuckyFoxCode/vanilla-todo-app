@@ -1,4 +1,4 @@
-import { getTasks, saveTasks } from "./api.js";
+import { getTasks, getTheme, saveTasks } from "./api.js";
 import {
   bindEscapeForm,
   bindTaskActions,
@@ -7,6 +7,7 @@ import {
 } from "./handlers.js";
 import { state, ui } from "./state.js";
 import {
+  applyTheme,
   getUiRefs,
   render,
   renderAddTodoButton,
@@ -28,6 +29,7 @@ export async function initApp() {
     console.error(error);
   }
 
+  applyTheme(getTheme());
   renderApp();
   renderTodoForm();
   renderAddTodoButton();
