@@ -36,6 +36,25 @@ export function bindEscapeForm(isOpenFormBtn, { updateFormVisibility }) {
   });
 }
 
+export function bindFilters(filterSection, { render, saveTasks }) {
+  if (!filterSection) return;
+
+  filterSection.addEventListener("click", (event) => {
+    const btn = event.target.closest(".todo-filter__btn");
+
+    if (!btn || !filterSection.contains(btn)) return;
+
+    const btns = filterSection.querySelectorAll(".todo-filter__btn");
+    btns.forEach((el) => el.classList.remove("active-filter"));
+
+    btn.classList.add("active-filter");
+    ui.filtered = btn.dataset.filter;
+
+    render();
+    saveTasks(state.tasks, ui.filtered);
+  });
+}
+
 export function bindTaskActions(list, { render, saveTasks }) {
   list.addEventListener("click", (event) => {
     if (event.target.classList.contains("todo-list__item-checkbox")) {
@@ -46,7 +65,7 @@ export function bindTaskActions(list, { render, saveTasks }) {
       const todo = state.tasks.find((task) => task.id === id);
 
       if (!todo) return;
-      todo.completed = !todo.completed;
+      todo.completed = event.target.checked;
       render();
       saveTasks(state.tasks, ui.filtered);
     }

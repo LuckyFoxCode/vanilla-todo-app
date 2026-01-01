@@ -1,4 +1,3 @@
-import { saveTasks } from "./api.js";
 import { state, ui } from "./state.js";
 
 let root = null;
@@ -8,6 +7,7 @@ let input = null;
 let button = null;
 let isOpenFormBtn = null;
 let stats = null;
+let filterSection = null;
 let list = null;
 let info = null;
 let informationCounterTasks = null;
@@ -21,6 +21,7 @@ export function getUiRefs() {
     form,
     input,
     isOpenFormBtn,
+    filterSection,
     list,
     overlay,
     clearBtn,
@@ -162,12 +163,13 @@ function updateStats() {
 export function renderFilterTasks() {
   const filterStatus = ["all", "active", "completed"];
 
-  const filterTask = document.createElement("section");
-  filterTask.classList.add("todo-filter");
+  filterSection = document.createElement("section");
+  filterSection.classList.add("todo-filter");
 
   filterStatus.forEach((element) => {
     const filterButton = document.createElement("button");
     filterButton.classList.add("todo-filter__btn");
+    filterButton.type = "button";
     filterButton.textContent = element;
     filterButton.dataset.filter = element;
 
@@ -175,20 +177,10 @@ export function renderFilterTasks() {
       filterButton.classList.add("active-filter");
     }
 
-    filterButton.addEventListener("click", () => {
-      const buttons = document.querySelectorAll(".todo-filter__btn");
-      buttons.forEach((el) => el.classList.remove("active-filter"));
-      filterButton.classList.add("active-filter");
-
-      ui.filtered = element;
-      render();
-      saveTasks(state.tasks, ui.filtered);
-    });
-
-    filterTask.append(filterButton);
+    filterSection.append(filterButton);
   });
 
-  root.append(filterTask);
+  root.append(filterSection);
 }
 
 export function renderTodoList() {
