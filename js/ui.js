@@ -11,6 +11,7 @@ let stats = null;
 let list = null;
 let info = null;
 let informationCounterTasks = null;
+let clearBtn = null;
 let themeBtn = null;
 
 const statsCounters = [];
@@ -22,9 +23,8 @@ export function getUiRefs() {
     isOpenFormBtn,
     list,
     overlay,
+    clearBtn,
     themeBtn,
-    render,
-    updateFormVisibility,
   };
 }
 
@@ -108,11 +108,10 @@ export function renderStatistics() {
   themeBtn.type = "button";
   themeBtn.textContent = ui.theme === "light" ? "☀️" : "🌙";
 
-  const removeCompletedTasks = document.createElement("button");
-  removeCompletedTasks.classList.add("todo-stats__header-clear");
-  removeCompletedTasks.type = "button";
-  removeCompletedTasks.textContent = "🧽";
-  removeCompletedTasks.addEventListener("click", () => clearCompletedTasks());
+  clearBtn = document.createElement("button");
+  clearBtn.classList.add("todo-stats__header-clear");
+  clearBtn.type = "button";
+  clearBtn.textContent = "🧽";
 
   const wrapper = document.createElement("div");
   wrapper.classList.add("todo-stats__wrapper");
@@ -143,19 +142,14 @@ export function renderStatistics() {
     wrapper.append(card);
   });
 
-  wrapperBtn.append(themeBtn, removeCompletedTasks);
+  wrapperBtn.append(themeBtn, clearBtn);
   statsHeader.append(title, wrapperBtn);
   stats.append(statsHeader, wrapper);
   root.prepend(stats);
 }
-function clearCompletedTasks() {
-  state.tasks = state.tasks.filter((t) => !t.completed);
-  render();
-  saveTasks(state.tasks, ui.filtered);
-}
 
 function updateStats() {
-  if (!statsCounters.length === 0) return;
+  if (statsCounters.length === 0) return;
 
   const allTasks = state.tasks.length;
   const activeTasks = state.tasks.filter((t) => !t.completed).length;
@@ -200,9 +194,6 @@ export function renderFilterTasks() {
 export function renderTodoList() {
   list = document.createElement("ul");
   list.classList.add("todo-list");
-
-  // bindTaskActions(list);
-  // bindTaskEditing(list);
 
   root.append(list);
 }

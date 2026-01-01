@@ -18,6 +18,14 @@ export function bindThemeToggle(themeBtn, { applyTheme, saveTheme }) {
   });
 }
 
+export function bindClearCompleted(clearBtn, { render, saveTasks }) {
+  clearBtn.addEventListener("click", () => {
+    state.tasks = state.tasks.filter((t) => !t.completed);
+    render();
+    saveTasks(state.tasks, ui.filtered);
+  });
+}
+
 export function bindEscapeForm(isOpenFormBtn, { updateFormVisibility }) {
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && ui.isFormOpen) {

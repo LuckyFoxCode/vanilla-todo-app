@@ -1,5 +1,6 @@
 import { getTasks, getTheme, saveTasks, saveTheme } from "./api.js";
 import {
+  bindClearCompleted,
   bindEscapeForm,
   bindTaskActions,
   bindTaskEditing,
@@ -40,7 +41,8 @@ export async function initApp() {
   renderStatistics();
   renderFilterTasks();
   renderTodoList();
-  const { form, input, isOpenFormBtn, list, themeBtn } = getUiRefs();
+  const { form, input, isOpenFormBtn, list, clearBtn, themeBtn } = getUiRefs();
+  bindClearCompleted(clearBtn, { render, saveTasks });
   bindThemeToggle(themeBtn, { applyTheme, saveTheme });
   bindEscapeForm(isOpenFormBtn, { updateFormVisibility });
   handleAddTodoSubmit(form, input, isOpenFormBtn, {
